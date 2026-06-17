@@ -1,0 +1,140 @@
+{
+  "app": {
+    "gameName": "Monster of the Week"
+  },
+  "stats": {
+    "charm": "Charme",
+    "cool": "Cool",
+    "sharp": "Futé",
+    "tough": "Coriace",
+    "weird": "Bizarre"
+  },
+  "rollTiers": {
+    "success": "Succès",
+    "mixed": "Succès mitigé",
+    "failure": "Échec"
+  },
+  "dice": {
+    "noStat": "Sans stat",
+    "roll": "Lancer",
+    "rawResult": "Résultat brut",
+    "modifier": "Modificateur",
+    "total": "Total",
+    "advancedBonus": "+1 avancée"
+  },
+  "list": {
+    "title": "Mes personnages",
+    "newShort": "Nouveau",
+    "newCharacter": "Nouveau personnage",
+    "import": "Importer",
+    "emptyTitle": "Aucun chasseur pour l'instant",
+    "unknownPlaybook": "Type de chasseur inconnu",
+    "harm": "Blessures",
+    "xp": "Galons",
+    "galonsTaken": "Galons pris"
+  },
+  "creator": {
+    "back": "Retour",
+    "step": "Étape",
+    "choosePlaybook": "Choisir un type de chasseur",
+    "choosePlaybookDescription": "Choisissez le type qui correspond à votre chasseur.",
+    "characterName": "Nom du personnage",
+    "name": "Nom",
+    "namePlaceholder": "Nom du chasseur",
+    "statArray": "Répartition de statistiques",
+    "statArrayDescription": "Choisissez une répartition de statistiques.",
+    "movesAndGear": "Manœuvres et équipement",
+    "chooseStartingOptions": "choisissez vos options de départ.",
+    "moves": "Manœuvres",
+    "damage": "dégât",
+    "continue": "Continuer",
+    "links": "Liens entre chasseurs",
+    "linksDescription": "Optionnel — indiquez à quels autres chasseurs vous êtes lié.",
+    "linkHunterPlaceholder": "Nom du chasseur",
+    "history": "Histoire du chasseur",
+    "historyDescription": "Optionnel — décrivez le passé de votre chasseur : background, tragédie, relations, motivations.",
+    "createCharacter": "Créer le personnage",
+    "playbookSection": "Section du livret",
+    "playbookSectionDescription": "Complétez les éléments spécifiques à votre type de chasseur."
+  },
+  "sheet": {
+    "backToList": "Liste",
+    "deleteConfirm": "Supprimer",
+    "export": "Exporter",
+    "stats": "Statistiques",
+    "luck": "Chance",
+    "xp": "Galons",
+    "harm": "Blessures",
+    "gear": "Équipement",
+    "weaponName": "Nom de l'arme",
+    "damage": "dégât",
+    "links": "Liens entre chasseurs",
+    "linkHunterPlaceholder": "Nom du chasseur",
+    "history": "Histoire",
+    "historyPlaceholder": "Background, tragédie, relations, motivations, secrets...",
+    "notes": "Notes",
+    "notesPlaceholder": "Notes de session, indices, dettes, relations...",
+    "moves": "Manœuvres",
+    "basicMoves": "Manœuvres de base",
+    "playbookMoves": "Manœuvres du type",
+    "advancementsTab": "Améliorations",
+    "galonAvailable": "Galon disponible — allez dans l'onglet Améliorations pour choisir une option.",
+    "xpAutoTick": "XP coché automatiquement (jet raté)"
+  },
+  "movePicker": {
+    "titleSame": "Choisir une manœuvre",
+    "titleOther": "Choisir une manœuvre d'un autre livret",
+    "choosePlaybook": "Choisir un livret",
+    "noMovesAvailable": "Aucune manœuvre disponible",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
+  },
+  "tracker": {
+    "advancementAvailable": "Amélioration disponible",
+    "unstable": "Instable",
+    "dying": "Mourant"
+  },
+  "move": {
+    "details": "Détails",
+    "trigger": "Déclencheur",
+    "roll": "Jet"
+  },
+  "playbookSection": {
+    "title": "Section du livret",
+    "description": "Complétez les éléments spécifiques à votre type de chasseur.",
+    "configure": "Configurer",
+    "edit": "Modifier",
+    "notConfigured": "Section non configurée — cliquez pour remplir.",
+    "destiny": {
+      "discovery": "Comment avez-vous découvert votre destin ?",
+      "heroism": "Marqueurs d'héroïsme (choisir 3)",
+      "ruin": "Traits de ruine (choisir 1)"
+    },
+    "background": "Antécédent (choisir 1)",
+    "mission": "Mission (choisir 1)",
+    "refuge": "Options du Refuge (choisir 3)",
+    "sectGoodTraditions": "Bonnes traditions (choisir 2)",
+    "sectBadTraditions": "Mauvaises traditions (choisir 2)",
+    "curse": "Malédiction (choisir 1)",
+    "naturalAttacks": "Attaques naturelles",
+    "naturalAttacksModifiers": "Modificateurs",
+    "harmSingular": "dégât",
+    "harmPlural": "dégâts",
+    "agencyResources": "Ressources de l'agence (choisir 2)",
+    "agencyAdmin": "Contraintes de l'agence (choisir 2)",
+    "combatMagic": "Magie de combat (choisir 3, au moins 1 sort de base)",
+    "combatMagicBase": "Sorts de base",
+    "combatMagicEffects": "Effets",
+    "darkSide": "Traits de la face sombre (choisir 3)",
+    "preyLoss": "Qui avez-vous perdu ?",
+    "preyWhy": "Pourquoi avez-vous échoué ?",
+    "close": "Fermer"
+  },
+  "basicMovePicker": {
+    "title": "Manœuvres de base avancées",
+    "description": "Choisissez 2 manœuvres de base. Elles vous donneront +1 lors de vos jets.",
+    "advancedBadge": "+1",
+    "confirm": "Confirmer",
+    "cancel": "Annuler"
+  }
+}

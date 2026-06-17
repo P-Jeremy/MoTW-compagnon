@@ -1,0 +1,349 @@
+{
+  "id": "monster",
+  "name": "Le Monstre",
+  "description": "Je ressens la faim, la soif de destruction. Mais je la combats. Je ne suis plus humain, plus vraiment en tout cas, mais je me dois de protéger ceux qui le sont encore.",
+  "statArrays": [
+    {
+      "id": "monster-1",
+      "label": "Bête féroce",
+      "stats": {
+        "charm": -1,
+        "cool": -1,
+        "sharp": 0,
+        "tough": 2,
+        "weird": 3
+      }
+    },
+    {
+      "id": "monster-2",
+      "label": "Prédateur calculé",
+      "stats": {
+        "charm": -1,
+        "cool": 1,
+        "sharp": 1,
+        "tough": 0,
+        "weird": 3
+      }
+    },
+    {
+      "id": "monster-3",
+      "label": "Monstre séduisant",
+      "stats": {
+        "charm": 2,
+        "cool": 0,
+        "sharp": -1,
+        "tough": -1,
+        "weird": 3
+      }
+    },
+    {
+      "id": "monster-4",
+      "label": "Monstre froid",
+      "stats": {
+        "charm": -2,
+        "cool": 2,
+        "sharp": 0,
+        "tough": 0,
+        "weird": 3
+      }
+    },
+    {
+      "id": "monster-5",
+      "label": "Monstre intelligent",
+      "stats": {
+        "charm": 0,
+        "cool": -1,
+        "sharp": 2,
+        "tough": -1,
+        "weird": 3
+      }
+    }
+  ],
+  "moves": [
+    {
+      "id": "immortel",
+      "name": "Immortel",
+      "description": "Vous ne vieillissez pas, ne tombez pas malade et subissez -1 dégât chaque fois que vous subissez des dégâts."
+    },
+    {
+      "id": "charme-surnaturel",
+      "name": "Charme surnaturel",
+      "description": "Lancez +Bizarre au lieu de +Charme quand vous manipulez quelqu'un."
+    },
+    {
+      "id": "force-surnaturelle",
+      "name": "Force surnaturelle",
+      "description": "Lancez +Bizarre au lieu de +Coriace quand vous cassez la gueule à quelqu'un."
+    },
+    {
+      "id": "immateriel",
+      "name": "Immatériel",
+      "description": "Vous pouvez traverser tout ce qui est matériel (mais pas les gens)."
+    },
+    {
+      "id": "rapidite-surnaturelle",
+      "name": "Rapidité surnaturelle",
+      "description": "Vous êtes beaucoup plus rapide que les gens normaux. Quand vous chassez, fuyez ou courez, gagnez +1 constant."
+    },
+    {
+      "id": "griffes-bete",
+      "name": "Griffes de la bête",
+      "description": "Toutes vos attaques naturelles gagnent +1 dégât."
+    },
+    {
+      "id": "domination-mentale",
+      "name": "Domination mentale",
+      "description": "Quand vous regardez un humain droit dans les yeux et exercez votre volonté sur lui, lancez +Charme.",
+      "trigger": "Quand vous regardez un humain droit dans les yeux et exercez votre volonté sur lui",
+      "rollStat": "charm",
+      "results": {
+        "success": "Réserve 3. Dépensez pour lui donner un ordre. Les gens normaux obéissent quoi que vous leur demandiez. Les chasseurs peuvent choisir d'obéir ou non (et cochent de l'expérience s'ils acceptent).",
+        "mixed": "Réserve 1.",
+        "failure": "Ça ne fonctionne pas."
+      }
+    },
+    {
+      "id": "regeneration",
+      "name": "Régénération",
+      "description": "Quand vous subissez des dégâts, vous pouvez vous soigner. Lancez +Cool.",
+      "trigger": "Quand vous subissez des dégâts",
+      "rollStat": "cool",
+      "results": {
+        "success": "Soignez 2 dégâts et stabilisez vos blessures.",
+        "mixed": "Soignez 1 dégât et stabilisez vos blessures.",
+        "failure": "Vos blessures s'aggravent."
+      }
+    },
+    {
+      "id": "sombre-negociateur",
+      "name": "Sombre négociateur",
+      "description": "Vous pouvez utiliser la manœuvre manipuler quelqu'un sur les monstres et sur les gens, du moins s'ils sont en mesure de raisonner et de parler."
+    },
+    {
+      "id": "vol",
+      "name": "Vol",
+      "description": "Vous pouvez voler."
+    },
+    {
+      "id": "metamorphe",
+      "name": "Métamorphe",
+      "description": "Vous pouvez changer de forme (généralement en animal). Gagnez +1 pour enquêter sur un mystère quand vous utilisez le sens le plus développé d'une forme alternative."
+    },
+    {
+      "id": "emprunt",
+      "name": "Emprunt",
+      "description": "Prenez une manœuvre du livret d'un chasseur qui n'est pas joué pour l'instant."
+    }
+  ],
+  "moveChoices": {
+    "choose": 2,
+    "from": [
+      "immortel",
+      "charme-surnaturel",
+      "force-surnaturelle",
+      "immateriel",
+      "rapidite-surnaturelle",
+      "griffes-bete",
+      "domination-mentale",
+      "regeneration",
+      "sombre-negociateur",
+      "vol",
+      "metamorphe",
+      "emprunt"
+    ]
+  },
+  "species": {
+    "curseOptions": [
+      {
+        "id": "alimentation",
+        "name": "Alimentation",
+        "description": "Vous vous nourrissez d'êtres humains (sang, cervelle ou essence spirituelle). Vous devez agir sous pression pour résister à l'envie de vous nourrir quand l'opportunité se présente."
+      },
+      {
+        "id": "vulnerabilite",
+        "name": "Vulnérabilité",
+        "description": "Choisissez une substance. Vous subissez +1 dégât quand cette substance vous inflige des dégâts. Si vous êtes entravé ou entouré par cette substance, vous devez agir sous pression pour utiliser vos pouvoirs."
+      },
+      {
+        "id": "pulsion-aveugle",
+        "name": "Pulsion aveugle",
+        "description": "Une émotion vous gouverne (faim, haine, colère, peur, jalousie, cupidité, joie, orgueil, envie, luxure ou cruauté). Chaque fois que vous avez l'occasion d'assouvir cette émotion, vous devez le faire ou agir sous pression."
+      },
+      {
+        "id": "sombre-maitre",
+        "name": "Sombre maître",
+        "description": "Vous avez un maître maléfique qui ne sait pas que vous avez changé de camp. Il vous donne des ordres et ne souffre aucun refus ni échec."
+      }
+    ],
+    "naturalAttacks": {
+      "base": [
+        {
+          "id": "dents",
+          "name": "Dents",
+          "harm": 3,
+          "tags": [
+            "personnel"
+          ]
+        },
+        {
+          "id": "griffes",
+          "name": "Griffes",
+          "harm": 2,
+          "tags": [
+            "allonge"
+          ]
+        },
+        {
+          "id": "force-magique",
+          "name": "Force magique",
+          "harm": 1,
+          "tags": [
+            "magique",
+            "proche"
+          ]
+        },
+        {
+          "id": "absorption-energie",
+          "name": "Absorption d'énergie",
+          "harm": 1,
+          "tags": [
+            "personnel",
+            "absorption d'énergie"
+          ]
+        }
+      ],
+      "supplementary": [
+        {
+          "id": "plus-degats",
+          "name": "+1 dégât à une attaque de base"
+        },
+        {
+          "id": "ignore-armure",
+          "name": "Ignore l'armure à une attaque de base"
+        },
+        {
+          "id": "portee-sup",
+          "name": "Portée supplémentaire à une attaque de base"
+        }
+      ]
+    }
+  },
+  "gearChoices": [
+    {
+      "id": "monster-weapons",
+      "label": "Choisissez une arme (optionnel)",
+      "choose": 1,
+      "options": [
+        {
+          "id": "revolver-38-m",
+          "name": "Revolver, calibre .38",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "rechargement",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "9mm-m",
+          "name": "9 mm",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "magnum-m",
+          "name": "Magnum",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "rechargement",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "fusil-pompe-m",
+          "name": "Fusil à pompe",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "sanglant",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "couteau-chasse-m",
+          "name": "Couteau de chasse",
+          "harm": 1,
+          "tags": [
+            "allonge"
+          ]
+        },
+        {
+          "id": "coup-de-poing-m",
+          "name": "Coup-de-poing américain",
+          "harm": 1,
+          "tags": [
+            "allonge",
+            "silencieux",
+            "petit"
+          ]
+        },
+        {
+          "id": "epee-m",
+          "name": "Épée",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "sanglant"
+          ]
+        },
+        {
+          "id": "grande-epee-m",
+          "name": "Grande épée",
+          "harm": 3,
+          "tags": [
+            "allonge",
+            "sanglant",
+            "lourd"
+          ]
+        }
+      ]
+    }
+  ],
+  "histories": [
+    "Une fois, vous ne vous êtes plus contrôlé et avez failli le tuer. Demandez-lui comment il a réussi à vous arrêter.",
+    "Il a tenté de vous tuer, mais vous lui avez prouvé que vous étiez du côté du bien. Demandez-lui ce qui l'a convaincu.",
+    "Vous êtes profondément amoureux de lui. Demandez-lui s'il le sait et si le sentiment est réciproque.",
+    "Vous êtes parents proches ou il s'agit d'un descendant lointain. Précisez-lui la nature du lien de parenté.",
+    "Vous l'avez sauvé de l'un de vos congénères et avez évité que ce dernier ne subisse des représailles.",
+    "Il a un lien avec votre malédiction ou origine. Dites-lui en quoi.",
+    "Vous avez combattu ensemble et, contre toute attente, avez triomphé.",
+    "Il vous a sauvé d'un autre chasseur qui s'apprêtait à vous tuer. Demandez-lui ce qui s'est passé."
+  ],
+  "advancements": [
+    "Gagnez +1 Charme (+2 max.).",
+    "Gagnez +1 Futé (+2 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Gagnez +1 Coriace (+2 max.).",
+    "Prenez une autre manœuvre de Monstre.",
+    "Prenez une autre manœuvre de Monstre.",
+    "Gagnez un refuge, comme l'Expert, avec deux options.",
+    "Prenez une attaque naturelle.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Marquez deux des manœuvres de base comme avancées.",
+    "Notez deux de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Libérez-vous de la malédiction de votre espèce. Elle ne vous affecte plus, mais vous perdez 1 Bizarre.",
+    "Vous (re)devenez mauvais. Retirez ce personnage, qui rejoint les menaces dont dispose le Gardien.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

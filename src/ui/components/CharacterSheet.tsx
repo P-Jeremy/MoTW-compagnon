@@ -1,0 +1,550 @@
+import { ArrowLeft, Download, Trash2 } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import type { Character, DiceRoll, Move, Playbook, Tracker as TrackerType } from '../../domain/types';
+import { formatModifier, statLabels, statOrder } from '../../domain/statLabels';
+import { Tracker } from './Tracker';
+import { MoveCard } from './MoveCard';
+import fr from '../../data/locales/fr.json';
+import { basicMoves } from '../../application/basicMoveService';
+import { HunterReference } from './HunterReference';
+import { getAdvancementType, getAvailableAdvancements } from '../../application/advancementTypeService';
+import { MovePicker } from './MovePicker';
+import { BasicMovePicker } from './BasicMovePicker';
+import { PlaybookSectionPicker } from './PlaybookSectionPicker';
+import { hasPlaybookSection } from '../../application/playbookSectionService';
+
+interface CharacterSheetProps {
+  character: Character;
+  playbook: Playbook;
+  onBack: () => void;
+  onDelete: () => void;
+  onUpdate: (character: Character) => void;
+}
+
+export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate }: CharacterSheetProps) {
+  const [rolls, setRolls] = useState<Record<string, DiceRoll>>({});
+  const [activeTab, setActiveTab] = useState<'sheet' | 'moves' | 'reference' | 'advancements'>('sheet');
+  const [pendingAdvancement, setPendingAdvancement] = useState<{
+    text: string;
+    isAdvanced: boolean;
+  } | null>(null);
+  const [markBasicMovesFor, setMarkBasicMovesFor] = useState<{
+    text: string;
+    isAdvanced: boolean;
+  } | null>(null);
+  const [editingSection, setEditingSection] = useState(false);
+  const [xpNotice, setXpNotice] = useState(false);
+
+  const galonsTaken = character.galonsTaken ?? (character.advancementsTaken.length + character.advancedAdvancementsTaken.length);
+  const advancedUnlocked = galonsTaken >= 5;
+  const hasGalonAvailable = character.xp.current >= character.xp.max;
+
+  function applyGalon(overrides: Partial<Character>) {
+    onUpdate({
+      ...character,
+      xp: { ...character.xp, current: 0 },
+      galonsTaken: galonsTaken + 1,
+      ...overrides,
+    });
+  }
+
+  function takeAdvancement(advancement: string) {
+    const type = getAdvancementType(advancement);
+    if (type.kind === 'move-same' || type.kind === 'move-other') {
+      setPendingAdvancement({ text: advancement, isAdvanced: false });
+      return;
+    }
+    if (type.kind === 'mark-basic-moves') {
+      setMarkBasicMovesFor({ text: advancement, isAdvanced: false });
+      return;
+    }
+    const luckUpdate = type.kind === 'luck'
+      ? { luck: { ...character.luck, current: Math.min(character.luck.current + 1, character.luck.max) } }
+      : {};
+    const statsUpdate = type.kind === 'stat'
+      ? { stats: { ...character.stats, [type.stat]: character.stats[type.stat] + type.bonus } }
+      : {};
+    applyGalon({ ...luckUpdate, ...statsUpdate, advancementsTaken: [...character.advancementsTaken, advancement] });
+  }
+
+  function takeAdvancedAdvancement(advancement: string) {
+    if (!advancedUnlocked) return;
+    const type = getAdvancementType(advancement);
+    if (type.kind === 'move-same' || type.kind === 'move-other') {
+      setPendingAdvancement({ text: advancement, isAdvanced: true });
+      return;
+    }
+    if (type.kind === 'mark-basic-moves') {
+      setMarkBasicMovesFor({ text: advancement, isAdvanced: true });
+      return;
+    }
+    const luckUpdate = type.kind === 'luck'
+      ? { luck: { ...character.luck, current: Math.min(character.luck.current + 1, character.luck.max) } }
+      : {};
+    const statsUpdate = type.kind === 'stat'
+      ? { stats: { ...character.stats, [type.stat]: character.stats[type.stat] + type.bonus } }
+      : {};
+    applyGalon({ ...luckUpdate, ...statsUpdate, advancedAdvancementsTaken: [...character.advancedAdvancementsTaken, advancement] });
+  }
+
+  function confirmMoveAdvancement(moveId: string) {
+    if (!pendingAdvancement) return;
+    const advUpdate = pendingAdvancement.isAdvanced
+      ? { advancedAdvancementsTaken: [...character.advancedAdvancementsTaken, pendingAdvancement.text] }
+      : { advancementsTaken: [...character.advancementsTaken, pendingAdvancement.text] };
+    applyGalon({ moves: [...character.moves, moveId], ...advUpdate });
+    setPendingAdvancement(null);
+  }
+
+  function confirmMarkBasicMoves(moveIds: string[]) {
+    if (!markBasicMovesFor) return;
+    const advUpdate = markBasicMovesFor.isAdvanced
+      ? { advancedAdvancementsTaken: [...character.advancedAdvancementsTaken, markBasicMovesFor.text] }
+      : { advancementsTaken: [...character.advancementsTaken, markBasicMovesFor.text] };
+    applyGalon({
+      advancedBasicMoves: [...(character.advancedBasicMoves ?? []), ...moveIds],
+      ...advUpdate,
+    });
+    setMarkBasicMovesFor(null);
+  }
+
+  const moves = useMemo(() => {
+    const fixedIds = playbook.moveChoices.fixed ?? [];
+    const allIds = [...new Set([...fixedIds, ...character.moves])];
+    return allIds
+      .map((id) => playbook.moves.find((move) => move.id === id))
+      .filter((move): move is Move => Boolean(move));
+  }, [character.moves, playbook.moves, playbook.moveChoices.fixed]);
+
+  function updateTracker(key: 'luck' | 'xp' | 'harm', value: number) {
+    const tracker: TrackerType = character[key];
+    onUpdate({ ...character, [key]: { ...tracker, current: value } });
+  }
+
+  function updateWeaponName(weaponId: string, name: string) {
+    onUpdate({
+      ...character,
+      equipment: character.equipment.map((weapon) => (weapon.id === weaponId ? { ...weapon, name } : weapon)),
+    });
+  }
+
+  function handleRoll(moveId: string, roll: DiceRoll) {
+    setRolls((current) => ({ ...current, [moveId]: roll }));
+    if (roll.tier === 'failure' && character.xp.current < character.xp.max) {
+      onUpdate({ ...character, xp: { ...character.xp, current: character.xp.current + 1 } });
+      setXpNotice(true);
+      setTimeout(() => setXpNotice(false), 3000);
+    }
+  }
+
+  function exportCharacter() {
+    const json = JSON.stringify(character, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${character.name.replace(/\s+/g, '-').toLowerCase()}-motw.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const pendingMoveMode = pendingAdvancement
+    ? (getAdvancementType(pendingAdvancement.text).kind === 'move-same' ? 'same' : 'other') as 'same' | 'other'
+    : null;
+
+  return (
+    <main className="mx-auto min-h-dvh w-full max-w-6xl px-4 py-6 sm:px-6">
+      {pendingAdvancement && pendingMoveMode && (
+        <MovePicker
+          mode={pendingMoveMode}
+          currentPlaybookId={playbook.id}
+          ownedMoveIds={character.moves}
+          onSelect={confirmMoveAdvancement}
+          onCancel={() => setPendingAdvancement(null)}
+        />
+      )}
+      {markBasicMovesFor ? (
+        <BasicMovePicker
+          moves={basicMoves.filter((m) => !(character.advancedBasicMoves ?? []).includes(m.id))}
+          count={2}
+          onConfirm={confirmMarkBasicMoves}
+          onCancel={() => setMarkBasicMovesFor(null)}
+        />
+      ) : null}
+      <header className="mb-6 flex items-start justify-between gap-4">
+        <button
+          type="button"
+          onClick={onBack}
+          className="inline-flex min-h-11 items-center gap-2 rounded-md border border-stone-300 bg-white px-3 py-2 text-sm font-bold text-ink"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          {fr.sheet.backToList}
+        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={exportCharacter}
+            aria-label={fr.sheet.export}
+            className="inline-flex min-h-11 items-center gap-2 rounded-md border border-stone-300 bg-white px-3 py-2 text-sm font-bold text-ink"
+          >
+            <Download className="h-4 w-4" />
+            {fr.sheet.export}
+          </button>
+          <button
+            type="button"
+            onClick={onDelete}
+            aria-label={fr.sheet.deleteConfirm}
+            className="inline-flex min-h-11 items-center justify-center rounded-md border border-red-200 bg-white px-3 py-2 text-red-700"
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
+        </div>
+      </header>
+
+      <section className="mb-5 rounded-lg bg-ink p-5 text-white shadow-soft">
+        <p className="text-sm font-bold text-orange-200">{playbook.name}</p>
+        <input
+          value={character.name}
+          onChange={(event) => onUpdate({ ...character, name: event.target.value })}
+          className="mt-1 min-h-12 w-full bg-transparent text-3xl font-black outline-none sm:text-4xl border-b-2 border-transparent focus:border-white/40 transition-colors"
+        />
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-200">{playbook.description}</p>
+      </section>
+
+      <div className="mb-5 flex gap-1 border-b border-stone-200">
+        {(['sheet', 'moves', 'advancements', 'reference'] as const).map((tab) => (
+          <button
+            key={tab}
+            type="button"
+            onClick={() => setActiveTab(tab)}
+            className={`-mb-px border-b-2 px-4 py-2 text-sm font-bold transition-colors ${
+              activeTab === tab
+                ? 'border-ink text-ink'
+                : 'border-transparent text-stone-400 hover:text-stone-600'
+            }`}
+          >
+            {tab === 'sheet'
+              ? 'Fiche'
+              : tab === 'moves'
+              ? 'Manœuvres'
+              : tab === 'reference'
+              ? 'Aide de jeu'
+              : fr.sheet.advancementsTab}
+          </button>
+        ))}
+      </div>
+
+      {activeTab === 'sheet' ? (
+      <div className="grid gap-5 lg:grid-cols-2">
+        <div className="grid content-start gap-5">
+          <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
+            <h2 className="text-base font-bold text-ink">{fr.sheet.stats}</h2>
+            <div className="mt-3 grid grid-cols-5 gap-2 lg:grid-cols-1">
+              {statOrder.map((stat) => (
+                <div key={stat} className="rounded-md bg-stone-100 p-2 text-center lg:flex lg:items-center lg:justify-between">
+                  <span className="block text-xs font-bold text-stone-500 lg:text-sm">{statLabels[stat]}</span>
+                  <span className="mt-1 block text-xl font-black text-ink lg:mt-0">
+                    {formatModifier(character.stats[stat])}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <div className="grid gap-3 lg:grid-cols-1">
+            <Tracker
+              label={fr.sheet.luck}
+              value={character.luck.current}
+              max={character.luck.max}
+              onChange={(value) => updateTracker('luck', value)}
+              tone="luck"
+            />
+            <Tracker
+              label={fr.sheet.xp}
+              value={character.xp.current}
+              max={character.xp.max}
+              onChange={(value) => updateTracker('xp', value)}
+              tone="xp"
+            />
+            {hasGalonAvailable ? (
+              <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
+                {fr.sheet.galonAvailable}
+              </div>
+            ) : null}
+            <Tracker
+              label={fr.sheet.harm}
+              value={character.harm.current}
+              max={character.harm.max}
+              onChange={(value) => updateTracker('harm', value)}
+              tone="harm"
+            />
+          </div>
+
+          <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
+            <h2 className="text-base font-bold text-ink">{fr.sheet.gear}</h2>
+            <div className="mt-3 grid gap-3">
+              {character.equipment.map((weapon) => (
+                <article key={weapon.id} className="rounded-md bg-stone-100 p-3">
+                  <label className="block">
+                    <span className="sr-only">{fr.sheet.weaponName}</span>
+                    <input
+                      value={weapon.name}
+                      onChange={(event) => updateWeaponName(weapon.id, event.target.value)}
+                      className="min-h-10 w-full rounded-md border border-stone-300 bg-white px-3 text-sm font-black text-ink outline-none focus:border-ember focus:ring-2 focus:ring-orange-100"
+                    />
+                  </label>
+                  <p className="mt-1 text-sm font-bold text-stone-700">
+                    {weapon.harm} {fr.sheet.damage}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {weapon.tags.map((tag) => (
+                      <span key={tag} className="rounded bg-white px-2 py-1 text-xs font-bold text-stone-600">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <div className="grid content-start gap-5">
+          <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
+            <h2 className="text-base font-bold text-ink">{fr.sheet.history}</h2>
+            <textarea
+              value={character.history}
+              onChange={(event) => onUpdate({ ...character, history: event.target.value })}
+              className="mt-3 min-h-40 w-full resize-y rounded-md border border-stone-300 bg-stone-50 p-3 text-sm leading-6 text-ink outline-none focus:border-ember focus:ring-2 focus:ring-orange-100"
+              placeholder={fr.sheet.historyPlaceholder}
+            />
+          </section>
+
+          <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
+            <h2 className="text-base font-bold text-ink">{fr.sheet.notes}</h2>
+            <textarea
+              value={character.notes}
+              onChange={(event) => onUpdate({ ...character, notes: event.target.value })}
+              className="mt-3 min-h-40 w-full resize-y rounded-md border border-stone-300 bg-stone-50 p-3 text-sm leading-6 text-ink outline-none focus:border-ember focus:ring-2 focus:ring-orange-100"
+              placeholder={fr.sheet.notesPlaceholder}
+            />
+          </section>
+
+          <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
+            <h2 className="text-base font-bold text-ink">{fr.sheet.links}</h2>
+            <div className="mt-3 grid gap-3">
+              {playbook.histories.map((prompt, i) => {
+                const link = character.links.find((l) => l.prompt === prompt);
+                return (
+                  <div key={i}>
+                    <p className="text-xs leading-5 text-stone-500">{prompt}</p>
+                    <input
+                      value={link?.hunterName ?? ''}
+                      onChange={(event) => {
+                        const hunterName = event.target.value;
+                        const links = hunterName
+                          ? [...character.links.filter((l) => l.prompt !== prompt), { prompt, hunterName }]
+                          : character.links.filter((l) => l.prompt !== prompt);
+                        onUpdate({ ...character, links });
+                      }}
+                      placeholder={fr.sheet.linkHunterPlaceholder}
+                      className="mt-1 min-h-9 w-full rounded-md border border-stone-300 bg-stone-50 px-3 py-1 text-sm font-bold text-ink outline-none focus:border-ember focus:ring-2 focus:ring-orange-100"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {hasPlaybookSection(playbook) ? (
+            <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
+              <div className="mb-3 flex items-center justify-between">
+                <h2 className="text-base font-bold text-ink">{fr.playbookSection.title}</h2>
+                <button
+                  type="button"
+                  onClick={() => setEditingSection((v) => !v)}
+                  className="text-sm font-bold text-ember hover:underline"
+                >
+                  {editingSection ? fr.playbookSection.close : fr.playbookSection.configure}
+                </button>
+              </div>
+              {editingSection ? (
+                <PlaybookSectionPicker
+                  playbook={playbook}
+                  choices={character.playbookSection}
+                  onChange={(section) => onUpdate({ ...character, playbookSection: section })}
+                />
+              ) : Object.keys(character.playbookSection).length === 0 ? (
+                <button
+                  type="button"
+                  onClick={() => setEditingSection(true)}
+                  className="w-full rounded-lg border-2 border-dashed border-stone-300 p-4 text-sm text-stone-400 hover:border-ember hover:text-ember"
+                >
+                  {fr.playbookSection.notConfigured}
+                </button>
+              ) : (
+                <PlaybookSectionSummary choices={character.playbookSection} />
+              )}
+            </section>
+          ) : null}
+        </div>
+      </div>
+      ) : activeTab === 'moves' ? (
+        <div className="grid gap-5 lg:grid-cols-2">
+          <section className="grid content-start gap-6">
+            <div>
+              <h2 className="mb-3 text-xl font-black text-ink">{fr.sheet.playbookMoves} {playbook.name}</h2>
+              <div className="grid gap-4">
+                {moves.map((move) => (
+                  <MoveCard
+                    key={move.id}
+                    move={move}
+                    stats={character.stats}
+                    lastRoll={rolls[move.id]}
+                    onRoll={(roll) => handleRoll(move.id, roll)}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="grid content-start gap-6">
+            <div>
+              <h2 className="mb-3 text-xl font-black text-ink">{fr.sheet.basicMoves}</h2>
+              <div className="grid gap-4">
+                {basicMoves.map((move) => (
+                  <MoveCard
+                    key={move.id}
+                    move={move}
+                    stats={character.stats}
+                    lastRoll={rolls[move.id]}
+                    onRoll={(roll) => handleRoll(move.id, roll)}
+                    extraBonus={(character.advancedBasicMoves ?? []).includes(move.id) ? 1 : 0}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      ) : activeTab === 'advancements' ? (
+        <div className="grid gap-5 lg:grid-cols-2">
+          <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
+            <h2 className="text-base font-bold text-ink">{fr.sheet.advancementsTab}</h2>
+            <p className="mt-3 text-sm leading-6 text-stone-600">
+              {hasGalonAvailable
+                ? 'Vous avez un galon. Choisissez une amélioration et réinitialisez vos cases.'
+                : `Vous avez ${character.xp.current}/${character.xp.max} galons. Cochez cinq cases pour prendre un galon.`}
+            </p>
+            <p className="mt-3 text-sm font-semibold text-stone-700">
+              {`Galons pris : ${galonsTaken}`}
+            </p>
+
+            {hasGalonAvailable ? (
+              <div className="mt-5 grid gap-3">
+                <div>
+                  <h3 className="text-sm font-semibold text-ink">Avancement</h3>
+                  <div className="mt-3 grid gap-2">
+                    {getAvailableAdvancements(playbook.advancements, character.advancementsTaken).map((advancement, index) => (
+                      <button
+                        key={`${advancement}-${index}`}
+                        type="button"
+                        onClick={() => takeAdvancement(advancement)}
+                        className="w-full rounded-md border border-stone-200 bg-stone-50 px-4 py-3 text-left text-sm font-semibold text-ink transition hover:border-ember hover:bg-ember/10"
+                      >
+                        {advancement}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-semibold text-ink">Avancement avancé</h3>
+                  <div className="mt-3 grid gap-2">
+                    {getAvailableAdvancements(playbook.advancedAdvancements, character.advancedAdvancementsTaken).map((advancement, index) => (
+                      <button
+                        key={`${advancement}-${index}`}
+                        type="button"
+                        onClick={() => takeAdvancedAdvancement(advancement)}
+                        disabled={!advancedUnlocked}
+                        className={`w-full rounded-md border px-4 py-3 text-left text-sm font-semibold transition ${advancedUnlocked ? 'border-stone-200 bg-stone-50 text-ink hover:border-ember hover:bg-ember/10' : 'border-stone-200 bg-stone-100 text-stone-400 cursor-not-allowed'}`}
+                      >
+                        {advancement}
+                      </button>
+                    ))}
+                  </div>
+                  {!advancedUnlocked ? (
+                    <p className="mt-3 text-sm text-stone-500">Vous devez prendre {5 - galonsTaken} autres galons pour débloquer ces options.</p>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
+          </section>
+
+          <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
+            <h2 className="text-base font-bold text-ink">Choix pris</h2>
+            <div className="mt-4 grid gap-4">
+              <div>
+                <h3 className="text-sm font-semibold text-ink">Améliorations</h3>
+                {character.advancementsTaken.length === 0 ? (
+                  <p className="mt-3 text-sm text-stone-500">Aucune amélioration prise pour l'instant.</p>
+                ) : (
+                  <ul className="mt-3 list-disc space-y-2 pl-4 text-sm text-stone-700">
+                    {character.advancementsTaken.map((advancement, index) => (
+                      <li key={`${advancement}-${index}`}>{advancement}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold text-ink">Améliorations avancées</h3>
+                {character.advancedAdvancementsTaken.length === 0 ? (
+                  <p className="mt-3 text-sm text-stone-500">Aucune amélioration avancée prise pour l'instant.</p>
+                ) : (
+                  <ul className="mt-3 list-disc space-y-2 pl-4 text-sm text-stone-700">
+                    {character.advancedAdvancementsTaken.map((advancement, index) => (
+                      <li key={`${advancement}-${index}`}>{advancement}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </section>
+        </div>
+      ) : (
+        <HunterReference />
+      )}
+      {xpNotice ? (
+        <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-ember px-4 py-3 text-sm font-bold text-white shadow-lg">
+          {fr.sheet.xpAutoTick}
+        </div>
+      ) : null}
+    </main>
+  );
+}
+
+function PlaybookSectionSummary({
+  choices,
+}: {
+  choices: Record<string, string | string[]>;
+}) {
+  const entries = Object.entries(choices).filter(([, v]) => {
+    if (Array.isArray(v)) return v.length > 0;
+    return !!v;
+  });
+
+  if (entries.length === 0) return null;
+
+  return (
+    <dl className="grid gap-3 text-sm">
+      {entries.map(([key, value]) => (
+        <div key={key}>
+          <dt className="font-bold text-stone-900 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</dt>
+          <dd className="mt-1 text-stone-600">
+            {Array.isArray(value) ? value.join(', ') : value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}

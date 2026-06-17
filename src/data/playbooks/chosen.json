@@ -1,0 +1,148 @@
+{
+  "id": "chosen",
+  "name": "L'Élu",
+  "description": "Votre naissance fut annoncée par une prophétie. Vous êtes l'Élu, un être doué de facultés telles que vous êtes probablement capable de sauver le monde. Dans le cas contraire, la fin des temps est assurée.",
+  "statArrays": [
+    { "id": "chosen-1", "label": "Force charismatique", "stats": { "charm": 2, "cool": -1, "sharp": 1, "tough": 2, "weird": -1 } },
+    { "id": "chosen-2", "label": "Guerrier impassible", "stats": { "charm": -1, "cool": 2, "sharp": 1, "tough": 2, "weird": -1 } },
+    { "id": "chosen-3", "label": "Champion équilibré", "stats": { "charm": 1, "cool": 2, "sharp": 1, "tough": 1, "weird": -1 } },
+    { "id": "chosen-4", "label": "Élu visionnaire", "stats": { "charm": -1, "cool": 1, "sharp": 2, "tough": -1, "weird": 2 } },
+    { "id": "chosen-5", "label": "Élu mystique", "stats": { "charm": 1, "cool": 2, "sharp": -1, "tough": -1, "weird": 2 } }
+  ],
+  "moves": [
+    {
+      "id": "jouet-du-destin",
+      "name": "Jouet du destin",
+      "description": "Au début de chaque mystère, lancez +Bizarre pour voir ce qui est révélé concernant votre avenir immédiat.",
+      "trigger": "Au début de chaque mystère",
+      "rollStat": "weird",
+      "results": {
+        "success": "Le Gardien vous dévoile un détail utile sur le prochain mystère.",
+        "mixed": "Vous n'obtenez qu'un vague indice.",
+        "failure": "Vous allez avoir de sérieux ennuis."
+      }
+    },
+    {
+      "id": "bonne-raison",
+      "name": "Je suis ici pour une bonne raison",
+      "description": "Vous êtes destiné à quelque chose de bien précis. Vous ne pouvez pas mourir avant que l'événement en question ne se déroule. Si vous mourez au cours du jeu, vous devez dépenser un point de Chance. Une fois votre mission réussie (ou votre capital Chance épuisé), les paris sont ouverts."
+    },
+    {
+      "id": "entree-en-fanfare",
+      "name": "Entrée en fanfare",
+      "description": "Quand vous faites une entrée flamboyante dans une situation dangereuse, lancez +Cool.",
+      "trigger": "Quand vous faites une entrée flamboyante dans une situation dangereuse",
+      "rollStat": "cool",
+      "results": {
+        "success": "Chacun s'immobilise pour vous regarder et vous écouter jusqu'à ce que vous ayez terminé votre discours inaugural.",
+        "mixed": "Choisissez une personne ou un monstre, qui se fige et écoute jusqu'à ce que vous ayez fini de parler.",
+        "failure": "Tous les ennemis présents vous considèrent comme la pire menace qui pèse sur eux."
+      }
+    },
+    {
+      "id": "devastateur",
+      "name": "Dévastateur",
+      "description": "Quand vous infligez des dégâts, vous pouvez infliger +1 dégât."
+    },
+    {
+      "id": "consciencieux",
+      "name": "Consciencieux",
+      "description": "Quand votre destinée montre sa vilaine tête et que vous agissez conformément à un de vos traits de destinée (d'héroïsme ou de ruine), cochez de l'expérience. S'il s'agit d'un trait d'héroïsme, gagnez +1 temporaire."
+    },
+    {
+      "id": "invincible",
+      "name": "Invincible",
+      "description": "Considérez que vous avez toujours armure 2 (non cumulable avec d'autres protections)."
+    },
+    {
+      "id": "robustesse",
+      "name": "Robustesse",
+      "description": "Vous guérissez plus vite que les gens normaux. Chaque fois que vous effacez des dégâts parce que vous recevez des soins, effacez 1 dégât supplémentaire. En outre, vos blessures comptent comme 1 dégât de moins au regard des manœuvres de dégâts du Gardien."
+    }
+  ],
+  "moveChoices": {
+    "choose": 1,
+    "from": ["entree-en-fanfare", "devastateur", "consciencieux", "invincible", "robustesse"],
+    "fixed": ["jouet-du-destin", "bonne-raison"]
+  },
+  "gearChoices": [
+    {
+      "id": "chosen-armor",
+      "label": "Équipement de protection (optionnel, armure 1)",
+      "choose": 1,
+      "options": [
+        { "id": "chosen-armor-1", "name": "Équipement de protection", "harm": 0, "tags": ["armure 1"] }
+      ]
+    },
+    {
+      "id": "chosen-weapon-form",
+      "label": "Forme de votre arme spéciale (choisissez-en une)",
+      "choose": 1,
+      "options": [
+        { "id": "baton-special", "name": "Bâton", "harm": 1, "tags": ["allonge", "proche"] },
+        { "id": "arme-deux-mains", "name": "Arme à deux mains", "harm": 2, "tags": ["allonge", "lourd"] },
+        { "id": "arme-une-main", "name": "Arme à une main", "harm": 1, "tags": ["allonge", "équilibré"] },
+        { "id": "chaine-special", "name": "Chaîne", "harm": 1, "tags": ["allonge", "zone"] }
+      ]
+    },
+    {
+      "id": "chosen-weapon-options",
+      "label": "Options de votre arme spéciale (choisissez-en trois)",
+      "choose": 3,
+      "options": [
+        { "id": "option-artefact", "name": "Artefact (magique)", "harm": 0, "tags": ["magique"] },
+        { "id": "option-pointes", "name": "Pointes (+1 dégât, sanglant)", "harm": 1, "tags": ["sanglant"] },
+        { "id": "option-lame", "name": "Lame (+1 dégât)", "harm": 1, "tags": [] },
+        { "id": "option-lourd", "name": "Lourd (+1 dégât)", "harm": 1, "tags": ["lourd"] },
+        { "id": "option-long", "name": "Long (+proche)", "harm": 0, "tags": ["proche"] },
+        { "id": "option-lancable", "name": "Lançable (+proche)", "harm": 0, "tags": ["proche"] },
+        { "id": "option-chaine", "name": "Chaîne (+zone)", "harm": 0, "tags": ["zone"] }
+      ]
+    }
+  ],
+  "destiny": {
+    "discoveryOptions": [
+      "Attaqué par des monstres.",
+      "Cauchemars et visions.",
+      "Instruit depuis la naissance.",
+      "Un cinglé vous l'a révélé.",
+      "Un culte ancien vous a découvert.",
+      "Vous avez découvert la prophétie.",
+      "Recherché par votre ennemi juré."
+    ],
+    "heroism": ["Sacrifice", "Vous êtes le Champion", "Visions", "Instruction secrète", "Pouvoirs magiques", "Héritage mystique", "Une vie normale", "Amour sincère", "Vous pouvez sauver le monde.", "Alliés cachés", "La fin de monstres", "Aide divine"],
+    "ruin": ["Mort", "Vous ne pouvez pas sauver tout le monde", "Trahison", "Doute", "Amour impossible", "Connivence avec l'ennemi", "Damnation", "Hordes de monstres", "La fin des temps", "La source du mal", "Échec", "Un ennemi juré", "Pas de vie normale", "Perte d'êtres chers"]
+  },
+  "histories": [
+    "Vous êtes parents proches. Demandez-lui quel est votre lien de parenté exact.",
+    "Il était destiné à devenir votre mentor. Expliquez-lui comment cela vous a été révélé.",
+    "Votre meilleur ami, en qui vous avez une confiance aveugle.",
+    "Un ancien rival, avec qui vous avez fini par vous entendre.",
+    "Relation amoureuse, en cours ou à venir.",
+    "Simples amis, d'école, de travail, etc. Demandez-lui-en plus.",
+    "Aurait pu devenir l'Élu à votre place, mais a raté une épreuve. Expliquez-lui en quoi il a échoué.",
+    "Vous lui avez sauvé la vie, à une époque où il ne savait pas que les monstres existaient. Dites-lui de quoi vous l'avez sauvé."
+  ],
+  "advancements": [
+    "Gagnez +1 Charme (+3 max.).",
+    "Gagnez +1 Cool (+3 max.).",
+    "Gagnez +1 Bizarre (+3 max.).",
+    "Gagnez +1 Futé (+3 max.).",
+    "Gagnez +1 Coriace (+3 max.).",
+    "Prenez une autre manœuvre d'Élu.",
+    "Prenez une autre manœuvre d'Élu.",
+    "Gagnez un allié.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Supprimez un de vos traits de ruine et (si vous le souhaitez) un de vos marqueurs d'héroïsme. Vous avez modifié cet aspect de votre destinée.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "id": "wronged",
+  "name": "Le Vengeur",
+  "description": "Ils ont pris ceux que j'aimais. À l'époque, je n'étais pas assez fort pour me battre, mais j'ai étudié, je me suis entraîné, et je suis maintenant prêt à nettoyer le monde de leur souillure. Je les tuerai tous. C'est tout ce qui me reste.",
+  "statArrays": [
+    {
+      "id": "wronged-1",
+      "label": "Vengeur déterminé",
+      "stats": {
+        "charm": 0,
+        "cool": 1,
+        "sharp": -1,
+        "tough": 2,
+        "weird": 1
+      }
+    },
+    {
+      "id": "wronged-2",
+      "label": "Vengeur méthodique",
+      "stats": {
+        "charm": 0,
+        "cool": 0,
+        "sharp": 1,
+        "tough": 2,
+        "weird": 0
+      }
+    },
+    {
+      "id": "wronged-3",
+      "label": "Vengeur calculé",
+      "stats": {
+        "charm": 1,
+        "cool": 0,
+        "sharp": 1,
+        "tough": 2,
+        "weird": -1
+      }
+    },
+    {
+      "id": "wronged-4",
+      "label": "Vengeur possédé",
+      "stats": {
+        "charm": -1,
+        "cool": -1,
+        "sharp": 0,
+        "tough": 2,
+        "weird": 2
+      }
+    },
+    {
+      "id": "wronged-5",
+      "label": "Vengeur charismatique",
+      "stats": {
+        "charm": 1,
+        "cool": -1,
+        "sharp": 0,
+        "tough": 2,
+        "weird": 1
+      }
+    }
+  ],
+  "moves": [
+    {
+      "id": "je-connais-ma-proie",
+      "name": "Je connais ma proie",
+      "description": "Vous gagnez +1 constant lorsque vous êtes conscient d'enquêter, de poursuivre ou de combattre l'espèce de monstre qui est à l'origine de vos souffrances."
+    },
+    {
+      "id": "berserk",
+      "name": "Berserk",
+      "description": "Peu importe les dégâts que vous subissez, vous pouvez toujours continuer à vous battre jusqu'à ce que le combat en cours soit terminé. Pendant un combat, vous ne pouvez pas mourir. Mais, lorsque le combat prend fin, toutes les blessures prennent effet normalement."
+    },
+    {
+      "id": "ce-qui-ne-me-tue-pas",
+      "name": "Ce qui ne me tue pas…",
+      "description": "Si vous avez subi des dégâts en combat, gagnez +1 constant jusqu'à la fin du combat."
+    },
+    {
+      "id": "ferveur",
+      "name": "Ferveur",
+      "description": "Quand vous manipulez quelqu'un, lancez +Coriace au lieu de +Charme."
+    },
+    {
+      "id": "securite-d-abord",
+      "name": "La sécurité d'abord",
+      "description": "Vous vous êtes bricolé des protections supplémentaires, qui vous confèrent +1 armure (2 armure max.)."
+    },
+    {
+      "id": "chirurgie-maison",
+      "name": "Chirurgie maison",
+      "description": "Quand vous prodiguez les premiers soins à quelqu'un (y compris vous-même), lancez +Cool.",
+      "trigger": "Quand vous prodiguez les premiers soins à quelqu'un (y compris vous-même)",
+      "rollStat": "cool",
+      "results": {
+        "success": "Tout se passe comme prévu : vous stabilisez la blessure et éliminez 1 dégât.",
+        "mixed": "Au choix : stabilisez la blessure mais -1 temporaire au patient ; éliminez 1 dégât et stabilisez temporairement mais la blessure se rouvrira (2 dégâts instables) ; éliminez 1 dégât et stabilisez mais -1 constant jusqu'à soins corrects.",
+        "failure": "Ça empire."
+      }
+    },
+    {
+      "id": "question-de-materiel",
+      "name": "C'est une question de matériel",
+      "description": "Vous gagnez +1 pour casser la gueule avec votre arme de prédilection."
+    },
+    {
+      "id": "plus-jamais",
+      "name": "Plus jamais",
+      "description": "En combat, vous pouvez protéger quelqu'un sans lancer les dés, comme si vous aviez obtenu un 10+, mais vous ne pouvez pas « subir moins de dégâts »."
+    }
+  ],
+  "moveChoices": {
+    "choose": 2,
+    "from": [
+      "berserk",
+      "ce-qui-ne-me-tue-pas",
+      "ferveur",
+      "securite-d-abord",
+      "chirurgie-maison",
+      "question-de-materiel",
+      "plus-jamais"
+    ],
+    "fixed": [
+      "je-connais-ma-proie"
+    ]
+  },
+  "prey": {
+    "lossOptions": [
+      "Vos parents",
+      "Vos frères et sœurs",
+      "Votre époux/concubin",
+      "Vos enfants",
+      "Vos meilleurs amis"
+    ],
+    "whyFailed": [
+      "en faute",
+      "égoïste",
+      "blessé",
+      "faible",
+      "lent",
+      "effrayé",
+      "dans le déni",
+      "complice"
+    ]
+  },
+  "gearChoices": [
+    {
+      "id": "wronged-main",
+      "label": "Choisissez une arme de prédilection",
+      "choose": 1,
+      "options": [
+        {
+          "id": "fusil-scie",
+          "name": "Fusil à canon scié",
+          "harm": 3,
+          "tags": [
+            "allonge",
+            "proche",
+            "sanglant",
+            "bruyant",
+            "rechargement"
+          ]
+        },
+        {
+          "id": "escopette",
+          "name": "Escopette",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "couteau-combat",
+          "name": "Couteau de combat",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "discret"
+          ]
+        },
+        {
+          "id": "grande-arme-w",
+          "name": "Grande épée ou grande hache",
+          "harm": 3,
+          "tags": [
+            "allonge",
+            "sanglant",
+            "lourd"
+          ]
+        },
+        {
+          "id": "armes-speciales-w",
+          "name": "Armes spécialisées contre votre proie (4 dégâts contre eux, 1 autrement)",
+          "harm": 4,
+          "tags": [
+            "spécialisé"
+          ]
+        },
+        {
+          "id": "dague-enchantee-w",
+          "name": "Dague enchantée",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "magique"
+          ]
+        },
+        {
+          "id": "tronconneuse",
+          "name": "Tronçonneuse",
+          "harm": 3,
+          "tags": [
+            "allonge",
+            "sanglant",
+            "peu fiable",
+            "bruyant",
+            "lourd"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wronged-secondary",
+      "label": "Choisissez deux armes utiles",
+      "choose": 2,
+      "options": [
+        {
+          "id": "revolver-38-w",
+          "name": "Revolver, calibre .38",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "rechargement",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "9mm-w",
+          "name": "9 mm",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "fusil-chasse-w",
+          "name": "Fusil de chasse",
+          "harm": 2,
+          "tags": [
+            "loin",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "fusil-pompe-w",
+          "name": "Fusil à pompe",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "sanglant",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "couteau-chasse-w",
+          "name": "Couteau de chasse",
+          "harm": 1,
+          "tags": [
+            "allonge"
+          ]
+        },
+        {
+          "id": "coup-de-poing-w",
+          "name": "Coup-de-poing américain",
+          "harm": 1,
+          "tags": [
+            "allonge",
+            "discret"
+          ]
+        },
+        {
+          "id": "fusil-assaut-w",
+          "name": "Fusil d'assaut",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "zone",
+            "bruyant",
+            "rechargement"
+          ]
+        }
+      ]
+    }
+  ],
+  "histories": [
+    "Il vous a aidé à un moment crucial de votre quête de vengeance. Dites-lui en quoi vous aviez besoin de son aide.",
+    "Il se tenait entre vous et ce que vous deviez découvrir. Demandez-lui pourquoi.",
+    "Il a lui aussi perdu un ami ou un parent, emporté par ces monstres. Demandez-lui de qui il s'agissait.",
+    "Vous êtes parents proches ou éloignés. Dites-lui quel est votre lien de parenté exact.",
+    "Vous lui avez sauvé la vie alors qu'il ne s'agissait encore que d'un jeune chasseur inexpérimenté. Demandez-lui de quoi vous l'avez sauvé.",
+    "Vous respectez ses connaissances acquises au prix de maintes difficultés et lui demandez souvent conseil.",
+    "Il vous a appris les ficelles du métier lorsque vous avez appris à vous battre.",
+    "Il vous a vu perdre les pédales et péter un câble. Décrivez-lui la situation et demandez-lui quels dégâts collatéraux vous avez causés."
+  ],
+  "advancements": [
+    "Gagnez +1 Coriace (+3 max.).",
+    "Gagnez +1 Futé (+2 max.).",
+    "Gagnez +1 Bizarre (+2 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Prenez une autre manœuvre de Vengeur.",
+    "Prenez une autre manœuvre de Vengeur.",
+    "Gagnez un refuge (comme l'Expert) avec deux options.",
+    "Ajoutez une nouvelle option à votre refuge.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Vous traquez le ou les monstres responsables de votre perte. Le prochain mystère du Gardien doit les concerner.",
+    "Changez la cible de votre rage vengeresse. Choisissez une nouvelle espèce de monstres. Je connais ma proie s'applique maintenant à eux.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

@@ -1,0 +1,362 @@
+{
+  "id": "initiate",
+  "name": "L'Initié",
+  "description": "Depuis l'aube de l'histoire, nous sommes le rempart qui se dresse en travers du chemin des Ténèbres. Nous connaissons bien les maux qui accablent le monde, et nous les combattons afin que l'humanité ne connaisse pas la peur. Nous sommes la flamme qui chasse l'ombre.",
+  "statArrays": [
+    {
+      "id": "initiate-1",
+      "label": "Guerrier mystique",
+      "stats": {
+        "charm": -1,
+        "cool": 1,
+        "sharp": 0,
+        "tough": 1,
+        "weird": 2
+      }
+    },
+    {
+      "id": "initiate-2",
+      "label": "Érudit occulte",
+      "stats": {
+        "charm": 0,
+        "cool": 1,
+        "sharp": 1,
+        "tough": -1,
+        "weird": 2
+      }
+    },
+    {
+      "id": "initiate-3",
+      "label": "Guerrier de l'ombre",
+      "stats": {
+        "charm": -1,
+        "cool": 0,
+        "sharp": -1,
+        "tough": 2,
+        "weird": 2
+      }
+    },
+    {
+      "id": "initiate-4",
+      "label": "Adepte visionnaire",
+      "stats": {
+        "charm": 1,
+        "cool": -1,
+        "sharp": 1,
+        "tough": 0,
+        "weird": 2
+      }
+    },
+    {
+      "id": "initiate-5",
+      "label": "Initié équilibré",
+      "stats": {
+        "charm": 0,
+        "cool": 0,
+        "sharp": 0,
+        "tough": 1,
+        "weird": 2
+      }
+    }
+  ],
+  "moves": [
+    {
+      "id": "quand-reconnu-secte",
+      "name": "Quand vous êtes reconnu auprès de votre secte",
+      "description": "Lancez +Charme au début de chaque mystère.",
+      "trigger": "Au début de chaque mystère",
+      "rollStat": "charm",
+      "results": {
+        "success": "La secte vous offre des informations utiles ou une aide sur le terrain.",
+        "mixed": "Vous recevez une mission liée au mystère, qui vous vaudra des informations ou de l'aide si vous la réussissez.",
+        "failure": "Il vous est demandé de faire quelque chose de mal. Si vous ratez la mission ou refusez d'obéir, vous aurez des problèmes avec la secte jusqu'à ce que vous vous soyez racheté."
+      }
+    },
+    {
+      "id": "arts-de-combat-anciens",
+      "name": "Arts de combat anciens",
+      "description": "Quand vous utilisez une arme ancienne d'allonge, vous infligez +1 dégât et gagnez +1 chaque fois que vous effectuez un jet pour protéger quelqu'un."
+    },
+    {
+      "id": "mystique",
+      "name": "Mystique",
+      "description": "Chaque fois que vous utilisez la magie avec succès, gagnez +1 temporaire."
+    },
+    {
+      "id": "predictions",
+      "name": "Prédictions",
+      "description": "La secte connaît de vieilles prophéties et techniques de divination. Une fois par mystère, vous pouvez y faire appel. Lancez +Bizarre.",
+      "trigger": "Une fois par mystère, quand vous faites appel aux prophéties et divinations",
+      "rollStat": "weird",
+      "results": {
+        "success": "Réserve 3. Dépensez pour : disposer d'un objet utile, vous trouver au bon endroit au bon moment, gagner +1 temporaire ou donner +1 temporaire à un autre chasseur, prévenir rétroactivement quelqu'un d'une attaque.",
+        "mixed": "Réserve 1.",
+        "failure": "Vous recevez des informations erronées et le Gardien décide en quoi cela vous affecte."
+      }
+    },
+    {
+      "id": "voeu-sacre",
+      "name": "Vœu sacré",
+      "description": "Vous pouvez vous attacher à un objectif précis en faisant vœu d'abstinence. Tant que vous respectez votre vœu, cochez de l'expérience à la fin de chaque séance et gagnez +1 sur tout jet qui vous aide directement. Si vous brisez votre vœu, subissez -1 constant jusqu'à expiation."
+    },
+    {
+      "id": "mentor",
+      "name": "Mentor",
+      "description": "Vous avez un mentor au sein de la secte. Quand vous contactez votre mentor pour obtenir des renseignements, lancez +Futé.",
+      "trigger": "Quand vous contactez votre mentor pour obtenir des renseignements",
+      "rollStat": "sharp",
+      "results": {
+        "success": "Vous obtenez une réponse à votre question.",
+        "mixed": "Au choix : la secte est trop occupée pour vous aider, ou elle accepte de vous répondre en échange d'une faveur.",
+        "failure": "Votre question pose problème."
+      }
+    },
+    {
+      "id": "apprenti",
+      "name": "Apprenti",
+      "description": "Vous avez un apprenti. Il compte comme un allié subordonné (motivation : suivre vos instructions à la lettre)."
+    },
+    {
+      "id": "main-secourable",
+      "name": "Main secourable",
+      "description": "Quand vous parvenez à donner un coup de main à un autre chasseur, il gagne +2 au lieu de l'habituel +1."
+    },
+    {
+      "id": "magie-noire",
+      "name": "Cette bonne vieille magie noire",
+      "description": "Quand vous utilisez la magie, vous pouvez poser une question de la manœuvre enquêter sur un mystère comme effet."
+    }
+  ],
+  "moveChoices": {
+    "choose": 3,
+    "from": [
+      "arts-de-combat-anciens",
+      "mystique",
+      "predictions",
+      "voeu-sacre",
+      "mentor",
+      "apprenti",
+      "main-secourable",
+      "magie-noire"
+    ],
+    "fixed": [
+      "quand-reconnu-secte"
+    ]
+  },
+  "sect": {
+    "goodTraditions": {
+      "choose": 2,
+      "options": [
+        "Arts de combat",
+        "Savante",
+        "Tactiques souples",
+        "Chapitres partout",
+        "Gadgets ingénieux",
+        "Intégrée dans la société",
+        "Modernisée",
+        "Savoir ancien",
+        "Hiérarchie ouverte",
+        "Savoir magique",
+        "Objets magiques",
+        "Pouvoir séculier",
+        "Riche"
+      ]
+    },
+    "badTraditions": {
+      "choose": 2,
+      "options": [
+        "Paranoïaque et secrète",
+        "Mobiles douteux",
+        "Leaders tyranniques",
+        "Lois strictes",
+        "Hiérarchie fermée",
+        "Importance de la tradition",
+        "Équipement obsolète",
+        "Vœux mystiques",
+        "Divisée en faction",
+        "Sans vision à long terme",
+        "Pauvre",
+        "Obéissance totale"
+      ]
+    }
+  },
+  "gearChoices": [
+    {
+      "id": "initiate-archaic",
+      "label": "Armes archaïques (deux ou trois selon la secte)",
+      "choose": 2,
+      "options": [
+        {
+          "id": "epee-i",
+          "name": "Épée",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "sanglant"
+          ]
+        },
+        {
+          "id": "hache-i",
+          "name": "Hache",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "sanglant"
+          ]
+        },
+        {
+          "id": "grande-epee-i",
+          "name": "Grande épée",
+          "harm": 3,
+          "tags": [
+            "allonge",
+            "sanglant",
+            "lourd"
+          ]
+        },
+        {
+          "id": "grande-hache-i",
+          "name": "Grande hache",
+          "harm": 3,
+          "tags": [
+            "allonge",
+            "sanglant",
+            "lent",
+            "lourd"
+          ]
+        },
+        {
+          "id": "couteau-argent-i",
+          "name": "Couteau en argent",
+          "harm": 1,
+          "tags": [
+            "allonge",
+            "argent"
+          ]
+        },
+        {
+          "id": "batons-combat-i",
+          "name": "Bâtons de combat",
+          "harm": 1,
+          "tags": [
+            "allonge",
+            "rapide"
+          ]
+        },
+        {
+          "id": "lance-i",
+          "name": "Lance",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "proche"
+          ]
+        },
+        {
+          "id": "masse-i",
+          "name": "Masse",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "sanglant"
+          ]
+        },
+        {
+          "id": "arbalete-i",
+          "name": "Arbalète",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "lent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "initiate-modern",
+      "label": "Armes modernes (une ou deux selon la secte)",
+      "choose": 1,
+      "options": [
+        {
+          "id": "revolver-38-i",
+          "name": "Revolver, calibre .38",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "rechargement",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "9mm-i",
+          "name": "9 mm",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "fusil-sniper-i",
+          "name": "Fusil de sniper",
+          "harm": 3,
+          "tags": [
+            "loin"
+          ]
+        },
+        {
+          "id": "magnum-i",
+          "name": "Magnum",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "rechargement",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "fusil-pompe-i",
+          "name": "Fusil à pompe",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "sanglant",
+            "bruyant"
+          ]
+        }
+      ]
+    }
+  ],
+  "histories": [
+    "C'est un membre profane de votre secte.",
+    "Vous avez combattu côte à côte alors que rien ne semblait pouvoir arrêter la marée de monstres. Demandez-lui comment cela s'est passé.",
+    "Vous êtes amis, mais il vous a d'abord rencontré sous votre identité d'emprunt. Demandez-lui ce qu'il ressent à ce sujet.",
+    "Vous êtes parents proches ou concubins/époux. Décidez ensemble de la nature de votre relation.",
+    "Membres du même club d'arts martiaux / de combat anciens.",
+    "Il apparaît dans les prophéties, mais le rôle qu'il sera amené à jouer est indéterminé.",
+    "C'est un ancien membre de la secte, mais vous êtes restés amis. Demandez-lui pourquoi il en est parti ou en a été chassé.",
+    "Vous vous êtes rencontrés lors de recherches mystiques et êtes des camarades occultes depuis."
+  ],
+  "advancements": [
+    "Gagnez +1 Bizarre (+3 max.).",
+    "Gagnez +1 Futé (+2 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Gagnez +1 Coriace (+2 max.).",
+    "Prenez une autre manœuvre d'Initié.",
+    "Prenez une autre manœuvre d'Initié.",
+    "Prenez le commandement de votre chapitre de la secte.",
+    "Gagnez le commandement d'une équipe de la secte.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Devenez le leader, ou le leader effectif, de la secte.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

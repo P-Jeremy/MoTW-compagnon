@@ -1,0 +1,30 @@
+# Dépendances
+node_modules/
+
+# Build
+dist/
+
+# TypeScript build cache
+*.tsbuildinfo
+vite.config.d.ts
+vite.config.js
+
+# Environnement Python (outils de dev locaux)
+.venv/
+
+# Données de personnages (générées à l'exécution)
+src/data/characters/characters.json
+
+# Fichiers temporaires
+.tmp_*
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+docs
+

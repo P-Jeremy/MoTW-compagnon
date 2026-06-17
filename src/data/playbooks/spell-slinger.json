@@ -1,0 +1,290 @@
+{
+  "id": "spell-slinger",
+  "name": "Le Magicien",
+  "description": "On combat le feu avec la magie du feu.",
+  "statArrays": [
+    {
+      "id": "spell-1",
+      "label": "Mage équilibré",
+      "stats": {
+        "charm": -1,
+        "cool": 1,
+        "sharp": 1,
+        "tough": 0,
+        "weird": 2
+      }
+    },
+    {
+      "id": "spell-2",
+      "label": "Mage robuste",
+      "stats": {
+        "charm": 0,
+        "cool": -1,
+        "sharp": 1,
+        "tough": 1,
+        "weird": 2
+      }
+    },
+    {
+      "id": "spell-3",
+      "label": "Mage érudit",
+      "stats": {
+        "charm": -1,
+        "cool": 0,
+        "sharp": 2,
+        "tough": -1,
+        "weird": 2
+      }
+    },
+    {
+      "id": "spell-4",
+      "label": "Mage charismatique",
+      "stats": {
+        "charm": 1,
+        "cool": 0,
+        "sharp": 1,
+        "tough": -1,
+        "weird": 2
+      }
+    },
+    {
+      "id": "spell-5",
+      "label": "Mage concentré",
+      "stats": {
+        "charm": 0,
+        "cool": 0,
+        "sharp": 1,
+        "tough": 0,
+        "weird": 2
+      }
+    }
+  ],
+  "moves": [
+    {
+      "id": "outils-et-techniques",
+      "name": "Outils et techniques",
+      "description": "Pour utiliser votre magie de combat au mieux, vous disposez de tout un ensemble d'outils et de techniques. Rayez-en une, vous aurez besoin des autres. Options : Consommables (composantes détruites au lancer, sinon 1 dégât ignore armure), Focaliseurs (baguettes et bâtons ; sans eux, -1 dégât en magie de combat), Gestes (mouvements des mains ; sans eux, -1 constant en magie de combat), Incantations (langue ésotérique ; sans elles, agir sous pression pour éviter confusion)."
+    },
+    {
+      "id": "instruction-esoterique",
+      "name": "Instruction ésotérique avancée",
+      "description": "Si vous êtes en mesure d'utiliser deux de vos trois outils et techniques, vous pouvez ignorer le troisième."
+    },
+    {
+      "id": "reputation-esoterique",
+      "name": "Réputation ésotérique",
+      "description": "Choisissez trois organisations ou groupes de la communauté surnaturelle. Ils ont entendu parler de vous et respectent votre puissance. Gagnez +1 temporaire quand vous manipulez les humains concernés. Vous pouvez aussi manipuler les monstres concernés, sans bonus cependant."
+    },
+    {
+      "id": "ca-aurait-pu-etre-pire",
+      "name": "Ça aurait pu être pire",
+      "description": "Quand vous ratez un jet d'utiliser la magie, vous pouvez choisir : pétard mouillé (préparatifs ratés, temps de préparation doublé) ou ça craint (l'effet se déroule comme prévu, mais vous subissez tous les pépins sauf un)."
+    },
+    {
+      "id": "vetements-enchantes",
+      "name": "Vêtements enchantés",
+      "description": "Choisissez un vêtement que vous portez quotidiennement. Il est enchanté. Tout ce qui tente de passer à travers (magie comprise) vous inflige -1 dégât."
+    },
+    {
+      "id": "divination-medico-legale",
+      "name": "Divination médico-légale",
+      "description": "Quand vous enquêtez sur un mystère, vous pouvez demander gratuitement : « Quelle magie a été mise en œuvre ici ? »"
+    },
+    {
+      "id": "depasse-toi",
+      "name": "Dépasse-toi ou rentre chez toi",
+      "description": "Quand vous devez utiliser la magie dans le cadre de la magie souveraine, gagnez +1 constant aux jets d'utiliser la magie."
+    },
+    {
+      "id": "c-est-pas-ma-faute",
+      "name": "C'est pas ma faute",
+      "description": "+1 pour agir sous pression quand vous devez gérer les conséquences de vos incantations."
+    },
+    {
+      "id": "praticien",
+      "name": "Pratiquant",
+      "description": "Choisissez deux effets de la manœuvre utiliser la magie. Gagnez +1 pour utiliser la magie quand vous choisissez un de ces effets."
+    },
+    {
+      "id": "bouclier-magique",
+      "name": "Bouclier magique",
+      "description": "Quand vous protégez quelqu'un, gagnez armure 2 contre tout dégât qui vous est transféré. Non cumulable avec une autre armure."
+    },
+    {
+      "id": "troisieme-oeil",
+      "name": "Troisième œil",
+      "description": "Quand vous évaluez une situation qui craint, vous pouvez ouvrir votre troisième œil un instant. Gagnez +1 réserve sur un résultat de 7+ et vous voyez en plus tout ce qui est invisible. En cas d'échec, vous pouvez gagner réserve 1, mais vous êtes à la merci d'un danger surnaturel."
+    }
+  ],
+  "moveChoices": {
+    "choose": 3,
+    "from": [
+      "instruction-esoterique",
+      "reputation-esoterique",
+      "ca-aurait-pu-etre-pire",
+      "vetements-enchantes",
+      "divination-medico-legale",
+      "depasse-toi",
+      "c-est-pas-ma-faute",
+      "praticien",
+      "bouclier-magique",
+      "troisieme-oeil"
+    ],
+    "fixed": [
+      "outils-et-techniques"
+    ]
+  },
+  "combatMagic": {
+    "choose": 3,
+    "minBase": 1,
+    "base": [
+      {
+        "id": "decharge",
+        "name": "Décharge",
+        "harm": 2,
+        "tags": [
+          "magique",
+          "proche",
+          "évident",
+          "bruyant"
+        ]
+      },
+      {
+        "id": "boule",
+        "name": "Boule",
+        "harm": 1,
+        "tags": [
+          "magique",
+          "zone",
+          "proche",
+          "évident",
+          "bruyant"
+        ]
+      },
+      {
+        "id": "projectile",
+        "name": "Projectile",
+        "harm": 1,
+        "tags": [
+          "magique",
+          "loin",
+          "évident",
+          "bruyant"
+        ]
+      },
+      {
+        "id": "mur",
+        "name": "Mur",
+        "harm": 1,
+        "tags": [
+          "magique",
+          "obstacle",
+          "proche",
+          "armure 1",
+          "évident",
+          "bruyant"
+        ]
+      }
+    ],
+    "effects": [
+      {
+        "id": "feu-effet",
+        "name": "Feu",
+        "description": "+2 dégâts, feu à un sort de base."
+      },
+      {
+        "id": "force-vent",
+        "name": "Force ou vent",
+        "description": "+1 dégât, percutant à un sort de base, ou +1 armure à un mur."
+      },
+      {
+        "id": "foudre",
+        "name": "Foudre ou entropie",
+        "description": "+1 dégât, sanglant à un sort de base."
+      },
+      {
+        "id": "gel-glace",
+        "name": "Gel ou glace",
+        "description": "-1 dégât, +2 armure à un mur, ou +1 dégât, gênant à un sort de base."
+      },
+      {
+        "id": "terre",
+        "name": "Terre",
+        "description": "Percutant, gênant à un sort de base."
+      },
+      {
+        "id": "necromantique",
+        "name": "Nécromantique",
+        "description": "Drain de vie à un sort de base."
+      }
+    ]
+  },
+  "gearChoices": [
+    {
+      "id": "spell-weapons",
+      "label": "Choisissez une arme (optionnel)",
+      "choose": 1,
+      "options": [
+        {
+          "id": "vieux-revolver",
+          "name": "Vieux revolver",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "rechargement",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "dague-rituelle",
+          "name": "Dague rituelle",
+          "harm": 1,
+          "tags": [
+            "allonge"
+          ]
+        },
+        {
+          "id": "epee-familiale",
+          "name": "Épée familiale",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "sanglant"
+          ]
+        }
+      ]
+    }
+  ],
+  "histories": [
+    "Il est votre conscience quand le pouvoir vous monte à la tête. Demandez-lui des détails sur la dernière fois que c'est arrivé.",
+    "Vous êtes parents mais vous êtes perdus de vue pendant des années. Demandez-lui comment il a repris contact.",
+    "Un mentor d'une autre vie. Demandez-lui ce qu'il vous a appris.",
+    "C'est lorsque vous l'avez sauvé avec votre magie qu'il a découvert le surnaturel. Dites-lui quelle créature le traquait.",
+    "Une vieille rivalité s'est muée en solide amitié. Expliquez-lui quel était l'objet de votre lutte.",
+    "Vous le croyiez mort et voilà qu'il revient. Qu'est-ce qui l'a « tué » ?",
+    "Vous entretenez une relation amoureuse en dents de scie. Demandez-lui ce qui vous sépare. Et ce qui vous empêche de vous quitter.",
+    "Un frère d'armes. Vous avez affronté les pires dangers ensemble."
+  ],
+  "advancements": [
+    "Gagnez +1 Futé (+2 max.).",
+    "Gagnez +1 Bizarre (+3 max.).",
+    "Gagnez +1 Coriace (+2 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une autre magie de combat.",
+    "Prenez une autre manœuvre de Magicien.",
+    "Prenez une autre manœuvre de Magicien."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Regagnez un point de Chance utilisé.",
+    "Prenez une autre magie de combat.",
+    "Barrez une autre option de vos outils et techniques."
+  ]
+}

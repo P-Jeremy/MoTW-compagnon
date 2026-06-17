@@ -1,0 +1,285 @@
+{
+  "id": "ordinary",
+  "name": "L'Ordinaire",
+  "description": "Vous pensiez que les monstres s'en prenaient surtout aux gens qui disposent de pouvoirs assez dingues pour les combattre ? Eh bah, moi non plus. Ce qui ne m'a pas empêché de finir dans cette équipe de chasseurs de monstres.",
+  "statArrays": [
+    {
+      "id": "ordinary-1",
+      "label": "Brave ordinaire",
+      "stats": {
+        "charm": 2,
+        "cool": 1,
+        "sharp": 0,
+        "tough": 1,
+        "weird": -1
+      }
+    },
+    {
+      "id": "ordinary-2",
+      "label": "Audacieux",
+      "stats": {
+        "charm": 2,
+        "cool": -1,
+        "sharp": 1,
+        "tough": 1,
+        "weird": 0
+      }
+    },
+    {
+      "id": "ordinary-3",
+      "label": "Ordinaire chanceux",
+      "stats": {
+        "charm": 2,
+        "cool": 0,
+        "sharp": -1,
+        "tough": 1,
+        "weird": 1
+      }
+    },
+    {
+      "id": "ordinary-4",
+      "label": "Ordinaire débrouillard",
+      "stats": {
+        "charm": 2,
+        "cool": 0,
+        "sharp": 1,
+        "tough": 1,
+        "weird": -1
+      }
+    },
+    {
+      "id": "ordinary-5",
+      "label": "Ordinaire vif",
+      "stats": {
+        "charm": 2,
+        "cool": 1,
+        "sharp": 1,
+        "tough": 0,
+        "weird": -1
+      }
+    }
+  ],
+  "moves": [
+    {
+      "id": "victime-permanente",
+      "name": "Victime permanente",
+      "description": "Quand un autre chasseur utilise protéger quelqu'un pour vous protéger, il coche de l'expérience. Chaque fois qu'un monstre vous capture, vous cochez de l'expérience."
+    },
+    {
+      "id": "oups",
+      "name": "Oups !",
+      "description": "Si vous voulez tomber sur quelque chose d'important, dites-le au Gardien. Vous trouverez quelque chose d'important et d'utile, mais pas nécessairement lié à vos problèmes actuels."
+    },
+    {
+      "id": "fichons-le-camp",
+      "name": "Fichons le camp d'ici !",
+      "description": "Si vous pouvez protéger quelqu'un en lui disant quoi faire ou en l'aidant à filer, lancez +Charme au lieu de +Coriace."
+    },
+    {
+      "id": "panique",
+      "name": "Panique",
+      "description": "Quand vous devez vous échapper, précisez le chemin que vous voulez emprunter et lancez +Futé.",
+      "trigger": "Quand vous devez vous échapper et choisissez un chemin",
+      "rollStat": "sharp",
+      "results": {
+        "success": "Vous êtes hors de danger.",
+        "mixed": "Vous pouvez filer ou rester, mais si vous partez il vous en coûtera (vous laissez quelque chose derrière, ou quelque chose vous accompagne).",
+        "failure": "Vous êtes pris à mi-chemin."
+      }
+    },
+    {
+      "id": "tiens-bon",
+      "name": "Tiens bon !",
+      "description": "Quand vous combattez un monstre, si vous donnez un coup de main à quelqu'un, ne lancez pas +Cool. Considérez que vous avez obtenu un 10."
+    },
+    {
+      "id": "fais-moi-confiance",
+      "name": "Fais-moi confiance",
+      "description": "Quand vous dites la vérité à un individu normal pour le protéger du danger, lancez +Charme.",
+      "trigger": "Quand vous dites la vérité à un individu normal pour le protéger",
+      "rollStat": "charm",
+      "results": {
+        "success": "Il fait ce que vous lui dites sans poser de questions.",
+        "mixed": "L'individu obtempère, mais le Gardien choisit : il commence par vous poser une question difficile, il joue la montre, ou il a une « meilleure » idée.",
+        "failure": "Il pense que vous êtes fou, voire dangereux."
+      }
+    },
+    {
+      "id": "qu-est-ce-qui-pourrait",
+      "name": "Qu'est-ce qui pourrait aller de travers ?",
+      "description": "Quand vous foncez tête baissée sans protéger vos arrières, réserve 2. Dépensez pour : infliger +1 dégât, diminuer de 1 les dégâts subis par quelqu'un, ou gagner +2 temporaire quand vous agissez sous pression."
+    },
+    {
+      "id": "t-inquiete-je-vais",
+      "name": "T'inquiète, je vais jeter un œil",
+      "description": "Quand vous partez de votre propre chef pour vérifier un endroit (ou quelque chose) d'effrayant, cochez de l'expérience."
+    }
+  ],
+  "moveChoices": {
+    "choose": 3,
+    "from": [
+      "victime-permanente",
+      "oups",
+      "fichons-le-camp",
+      "panique",
+      "tiens-bon",
+      "fais-moi-confiance",
+      "qu-est-ce-qui-pourrait",
+      "t-inquiete-je-vais"
+    ]
+  },
+  "gearChoices": [
+    {
+      "id": "ordinary-weapons",
+      "label": "Choisissez deux armes ordinaires",
+      "choose": 2,
+      "options": [
+        {
+          "id": "batte-o",
+          "name": "Club de golf, batte de baseball, batte de cricket ou crosse de hockey",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "inoffensif",
+            "sanglant"
+          ]
+        },
+        {
+          "id": "couteau-poche-o",
+          "name": "Couteau de poche ou couteau suisse",
+          "harm": 1,
+          "tags": [
+            "allonge",
+            "utile",
+            "petit"
+          ]
+        },
+        {
+          "id": "arme-poing-o",
+          "name": "Arme de poing de petit calibre",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "rechargement",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "fusil-chasse-o",
+          "name": "Fusil de chasse",
+          "harm": 3,
+          "tags": [
+            "loin",
+            "bruyant",
+            "rechargement"
+          ]
+        },
+        {
+          "id": "masse-o",
+          "name": "Masse ou hache de pompier",
+          "harm": 3,
+          "tags": [
+            "allonge",
+            "sanglant"
+          ]
+        },
+        {
+          "id": "nunchaku-o",
+          "name": "Nunchaku",
+          "harm": 2,
+          "tags": [
+            "allonge",
+            "zone"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ordinary-transport",
+      "label": "Choisissez un moyen de transport",
+      "choose": 1,
+      "options": [
+        {
+          "id": "voiture-vieille",
+          "name": "Voiture ancienne en mauvais état",
+          "harm": 0,
+          "tags": [
+            "véhicule"
+          ]
+        },
+        {
+          "id": "moto",
+          "name": "Moto",
+          "harm": 0,
+          "tags": [
+            "véhicule"
+          ]
+        },
+        {
+          "id": "voiture-recente",
+          "name": "Voiture plutôt récente en bon état",
+          "harm": 0,
+          "tags": [
+            "véhicule"
+          ]
+        },
+        {
+          "id": "van",
+          "name": "Van",
+          "harm": 0,
+          "tags": [
+            "véhicule"
+          ]
+        },
+        {
+          "id": "skateboard",
+          "name": "Skateboard",
+          "harm": 0,
+          "tags": [
+            "véhicule"
+          ]
+        },
+        {
+          "id": "velo",
+          "name": "Vélo",
+          "harm": 0,
+          "tags": [
+            "véhicule"
+          ]
+        }
+      ]
+    }
+  ],
+  "histories": [
+    "Vous êtes de proches parents. Précisez-lui votre lien de parenté.",
+    "Anciens rivaux, vous avez fini par vous respecter.",
+    "Histoire d'amour, à moins que vous ayez juste le béguin. Demandez-lui ce qu'il préfère.",
+    "C'est votre héros, le chasseur de monstres que vous aimeriez être. Dites-lui pourquoi vous le vénérez.",
+    "Bons amis. Dites-lui s'il s'agit d'une relation de longue date ou récente.",
+    "Vous vous méfiez un peu de lui (à cause de ses pouvoirs surnaturels ou quelque chose comme ça).",
+    "Il vous a dévoilé l'existence des monstres. Dites-lui ce que vous ressentez à ce sujet.",
+    "Vous lui avez sauvé la vie au cours d'une série d'événements improbables. Expliquez-lui."
+  ],
+  "advancements": [
+    "Gagnez +1 Charme (+3 max.).",
+    "Gagnez +1 Futé (+2 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Gagnez +1 Coriace (+2 max.).",
+    "Prenez une autre manœuvre d'Ordinaire.",
+    "Prenez une autre manœuvre d'Ordinaire.",
+    "Regagnez un point de Chance utilisé.",
+    "Regagnez un point de Chance utilisé.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Regagnez un point de Chance utilisé.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

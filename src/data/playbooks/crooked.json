@@ -1,0 +1,175 @@
+{
+  "id": "crooked",
+  "name": "Le Vaurien",
+  "description": "Quand j'ai découvert le monde secret des monstres et de la magie, eh bien… je ne l'ai pas trouvé très différent du monde qui était déjà le mien. Je n'ai pas franchement eu de mal à y trouver ma place.",
+  "statArrays": [
+    { "id": "crooked-1", "label": "Arnaqueur", "stats": { "charm": 1, "cool": 1, "sharp": 2, "tough": 0, "weird": -1 } },
+    { "id": "crooked-2", "label": "Costaud", "stats": { "charm": -1, "cool": 1, "sharp": 1, "tough": 2, "weird": 0 } },
+    { "id": "crooked-3", "label": "Froid calculateur", "stats": { "charm": -1, "cool": 2, "sharp": 2, "tough": 0, "weird": -1 } },
+    { "id": "crooked-4", "label": "Charmeur", "stats": { "charm": 2, "cool": 1, "sharp": 1, "tough": 0, "weird": -1 } },
+    { "id": "crooked-5", "label": "Manipulateur", "stats": { "charm": 2, "cool": 0, "sharp": 1, "tough": -1, "weird": 1 } }
+  ],
+  "moves": [
+    {
+      "id": "voyou",
+      "name": "Voyou",
+      "description": "Vous pouvez utiliser Coriace au lieu de Charme pour manipuler quelqu'un en le menaçant de le frapper."
+    },
+    {
+      "id": "cambrioleur",
+      "name": "Cambrioleur",
+      "description": "Quand vous entrez par effraction dans un endroit sûr, lancez +Futé.",
+      "trigger": "Quand vous entrez par effraction dans un endroit sûr",
+      "rollStat": "sharp",
+      "results": {
+        "success": "Choisissez trois avantages : entrer sans vous faire remarquer, ressortir sans vous faire remarquer, ne pas laisser le bazar derrière vous, trouver ce que vous étiez venu chercher.",
+        "mixed": "Choisissez deux avantages parmi : entrer sans vous faire remarquer, ressortir sans vous faire remarquer, ne pas laisser le bazar derrière vous, trouver ce que vous étiez venu chercher.",
+        "failure": "Les choses se passent mal."
+      }
+    },
+    {
+      "id": "escroc",
+      "name": "Escroc",
+      "description": "Quand vous êtes sur le point de manipuler quelqu'un, vous pouvez demander au Gardien : « Qu'est-ce qui convaincra cette personne de faire ce que je veux ? » Le Gardien doit alors vous répondre honnêtement, mais peut omettre certaines choses."
+    },
+    {
+      "id": "combinard",
+      "name": "Combinard",
+      "description": "Si vous avez besoin d'acheter quelque chose, de vendre quelque chose ou d'engager quelqu'un, lancez +Charme.",
+      "trigger": "Si vous avez besoin d'acheter, vendre ou engager quelqu'un",
+      "rollStat": "charm",
+      "results": {
+        "success": "Vous connaissez la personne qu'il vous faut.",
+        "mixed": "Vous connaissez la seule personne qui colle, mais il y a une complication : vous avez une dette envers elle, elle vous entube, ou vous l'entubez.",
+        "failure": "La seule personne qui peut vous aider vous déteste par-dessus tout."
+      }
+    },
+    {
+      "id": "assassin",
+      "name": "Assassin",
+      "description": "Quand vous tirez pour la première fois sur une personne qui ne se doute de rien, infligez-lui +2 dégâts."
+    },
+    {
+      "id": "charlatan",
+      "name": "Charlatan",
+      "description": "Quand vous voulez que les gens croient que vous avez recours à la magie, lancez +Cool. Vous pouvez aussi manipuler les gens en leur disant la bonne aventure : demandez gratuitement « Qu'espèrent-ils à l'instant même ? »",
+      "trigger": "Quand vous voulez que les gens croient que vous avez recours à la magie",
+      "rollStat": "cool",
+      "results": {
+        "success": "Votre public est captivé et totalement berné par votre illusion.",
+        "mixed": "Vous faites quelques erreurs, qui n'ont peut-être pas échappé à quelqu'un.",
+        "failure": "Quelque chose tourne mal."
+      }
+    },
+    {
+      "id": "pickpocket",
+      "name": "Pickpocket",
+      "description": "Quand vous volez un objet de petite taille, lancez +Charme.",
+      "trigger": "Quand vous volez un objet de petite taille",
+      "rollStat": "charm",
+      "results": {
+        "success": "Vous parvenez à vos fins et votre victime ne s'aperçoit de rien.",
+        "mixed": "Vous ratez votre coup, vous mettez la main sur le mauvais objet, ou votre victime ne vous oubliera pas de sitôt.",
+        "failure": "Ça tourne mal."
+      }
+    },
+    {
+      "id": "artefact",
+      "name": "Artefact",
+      "description": "Vous avez « découvert » un artefact magique aux pouvoirs bien pratiques. Au choix : amulette de protection (armure 1, magique, rechargement), porte-bonheur (peut être utilisé comme un point de Chance, une seule fois), grimoire (+1 temporaire pour utiliser la magie), passe-partout (ouvre toute serrure magique), pierre du diablotin (un démon mineur vous sert)."
+    },
+    {
+      "id": "equipe",
+      "name": "Équipe",
+      "description": "Vous disposez d'une équipe de trois ou quatre personnes qui peut vous aider en toutes circonstances."
+    },
+    {
+      "id": "pacte-diable",
+      "name": "Pacte avec le diable",
+      "description": "Vous avez vendu votre âme au diable. Choisissez une ou deux choses reçues en échange : richesse, célébrité, jeunesse, sexe, perfectionnement (+1 à deux caractéristiques). Le paiement s'effectuera à votre mort, dans six mois (deux choses) ou un an."
+    },
+    {
+      "id": "amis-flics",
+      "name": "Amis flics",
+      "description": "Vous connaissez quelques flics susceptibles de fermer les yeux ou de vous rendre service en échange d'une rétribution. Vous pouvez agir sous pression pour entrer en contact avec eux quand vous avez besoin de détourner l'attention des forces de l'ordre."
+    },
+    {
+      "id": "intronise",
+      "name": "Intronisé",
+      "description": "Vous faites partie d'un gang. Vous pouvez faire appel aux membres du gang, mais il faudra les payer. Vos chefs vous demanderont également de leur rendre des services."
+    },
+    {
+      "id": "chauffeur",
+      "name": "Chauffeur",
+      "description": "Vous gagnez +1 constant quand vous conduisez et pouvez faire démarrer n'importe quoi. Vous possédez aussi deux véhicules accessibles et courants."
+    },
+    {
+      "id": "terrain-connu",
+      "name": "Terrain connu",
+      "description": "Quand vous revenez dans votre ancien quartier, vous trouvez toujours des gens prêts à vous cacher ou vous rendre de menus services sans poser de questions."
+    },
+    {
+      "id": "sale-reputation",
+      "name": "Sale réputation",
+      "description": "Quand vous révélez qui vous êtes, votre réputation terrifiante compte comme une raison pour que les gens fassent ce que vous leur demandez dans le cadre de la manœuvre manipuler quelqu'un."
+    }
+  ],
+  "moveChoices": {
+    "choose": 2,
+    "from": ["artefact", "equipe", "pacte-diable", "amis-flics", "intronise", "chauffeur", "terrain-connu", "sale-reputation"],
+    "fixed": []
+  },
+  "background": {
+    "choose": 1,
+    "from": ["voyou", "cambrioleur", "escroc", "combinard", "assassin", "charlatan", "pickpocket"]
+  },
+  "gearChoices": [
+    {
+      "id": "crooked-weapons",
+      "label": "Choisissez trois armes",
+      "choose": 3,
+      "options": [
+        { "id": "revolver-22", "name": "Revolver, calibre .22", "harm": 1, "tags": ["proche", "rechargement", "petit"] },
+        { "id": "revolver-38", "name": "Revolver, calibre .38", "harm": 2, "tags": ["proche", "rechargement", "bruyant"] },
+        { "id": "9mm", "name": "9 mm", "harm": 2, "tags": ["proche", "bruyant"] },
+        { "id": "fusil-pompe", "name": "Fusil à pompe", "harm": 3, "tags": ["proche", "sanglant"] },
+        { "id": "fusil-chasse", "name": "Fusil de chasse", "harm": 2, "tags": ["loin", "bruyant"] },
+        { "id": "couteau-chasse", "name": "Couteau de chasse", "harm": 1, "tags": ["allonge"] },
+        { "id": "batte-baseball", "name": "Batte de baseball", "harm": 1, "tags": ["allonge"] },
+        { "id": "pistolet-mitrailleur", "name": "Pistolet-mitrailleur", "harm": 2, "tags": ["proche", "rechargement", "zone"] },
+        { "id": "fusil-assaut", "name": "Fusil d'assaut", "harm": 3, "tags": ["proche", "loin", "zone"] }
+      ]
+    }
+  ],
+  "histories": [
+    "Ce chasseur connaît votre passé criminel. Dites-lui quels crimes il vous a vu commettre.",
+    "Ce chasseur était là quand vous avez décidé de renoncer à votre ancienne vie pour traquer des monstres. Détaillez ce qui s'est passé.",
+    "Ce chasseur est votre jeune frère ou sœur, ou votre enfant (peut-être adoptif). Vous prenez soin de lui.",
+    "Ce chasseur est un cousin ou quelque autre parent éloigné.",
+    "Ce chasseur vous a sauvé la vie alors qu'un monstre était sur le point de vous envoyer six pieds sous terre. Maintenant, vous lui en devez une.",
+    "Ce chasseur a travaillé avec vous lors d'une mission plus ou moins légale. Détaillez-la.",
+    "Ce chasseur est votre guide moral. Quand vous lui parlez, ses conseils vous évitent de déraper.",
+    "Vous êtes inexorablement attiré par ce chasseur. Peut-être un jour le mériterez-vous."
+  ],
+  "advancements": [
+    "Gagnez +1 Futé (+3 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Gagnez +1 Charme (+2 max.).",
+    "Gagnez +1 Coriace (+2 max.).",
+    "Prenez une autre manœuvre de Vaurien.",
+    "Prenez une autre manœuvre de Vaurien.",
+    "Gagnez un allié : un membre de votre ancienne équipe.",
+    "Retrouvez un vieux paquet de fric, de quoi vivre dans l'insouciance pendant un an ou deux.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

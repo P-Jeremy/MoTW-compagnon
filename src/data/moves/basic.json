@@ -1,0 +1,85 @@
+[
+  {
+    "id": "act-under-pressure",
+    "name": "Agir sous pression",
+    "description": "Quand vous agissez sous pression, lancez +Cool.",
+    "rollStat": "cool",
+    "results": {
+      "success": "Vous remplissez l’objectif que vous vous étiez fixé.",
+      "mixed": "Le Gardien choisit : l’issue n’est pas si rose, vous avez un choix difficile à faire, ou un prix à payer.",
+      "failure": "La situation dérape."
+    }
+  },
+  {
+    "id": "help-out",
+    "name": "Donner un coup de main",
+    "description": "Vous pouvez aider un chasseur qui entreprend une manœuvre en lançant +Cool.",
+    "rollStat": "cool",
+    "results": {
+      "success": "Votre aide confère +1 à son jet.",
+      "mixed": "Votre aide confère +1 à son jet, mais vous vous retrouvez vous-même exposé.",
+      "failure": "Vous vous retrouvez exposé sans rien apporter à l’autre chasseur."
+    }
+  },
+  {
+    "id": "investigate-a-mystery",
+    "name": "Enquêter sur un mystère",
+    "description": "Quand vous enquêtez sur un mystère, lancez +Futé.\n\nUn point de réserve permet de poser au Gardien une des questions suivantes :\n• Que s’est-il passé ici ?\n• De quel genre de créature s’agit-il ?\n• Que sait-elle faire ?\n• À quoi est-elle vulnérable ?\n• Où est-elle partie ?\n• Que voulait-elle faire ?\n• Y a-t-il quelque chose de caché par ici ?",
+    "rollStat": "sharp",
+    "results": {
+      "success": "Réserve 2.",
+      "mixed": "Réserve 1.",
+      "failure": "Vous révélez des informations au monstre ou à l’individu auquel vous vous adressez. Le Gardien est en droit de vous poser quelques questions auxquelles vous devez répondre."
+    }
+  },
+  {
+    "id": "manipulate-someone",
+    "name": "Manipuler quelqu’un",
+    "description": "Après leur avoir donné une bonne raison, dites-leur ce que vous attendez d’eux, puis lancez +Charme.\n\nPour un individu normal :\n• Sur un 10+, il le fera pour la raison que vous lui avez donnée. Si vous en demandez trop, il vous dira ce qu’il doit entreprendre pour y parvenir, ou qu’il en est incapable.\n• Sur un 7-9, il obtempère, mais seulement si vous faites quelque chose sur-le-champ en échange pour montrer que vous êtes sincère. Si vous en demandez trop, il vous dira ce qu’il doit entreprendre pour y parvenir, si possible.\n• En cas d’échec, votre approche est complètement ratée. La cible est offensée ou en colère.\n\nPour un autre chasseur :\n• Sur un 10+, s’il fait ce que vous demandez, il gagne +1 temporaire.\n• Sur un 7-9, il décide s’il fait ce que vous demandez.\n• En cas d’échec, au chasseur de décider s’il est offensé ou agacé. Il coche de l’expérience s’il décide de ne pas faire ce que vous avez demandé.\n\nPour les monstres et les sbires :\nCette manœuvre ne fonctionne normalement pas sur les monstres, même s’ils sont capables de raisonner et de parler. Il est possible de manipuler des sbires humains, ou presque humains. Les sbires qui sont incapables de comprendre ou de raisonner ne peuvent pas être manipulés.",
+    "rollStat": "charm"
+  },
+  {
+    "id": "fight",
+    "name": "Casser la gueule",
+    "description": "Utilisée pour combattre (de sales monstres, le plus souvent).",
+    "rollStat": "tough",
+    "results": {
+      "success": "Vous infligez des dégâts importants et contrôlez la situation.",
+      "mixed": "Vous blessez la cible mais subissez des représailles ou un prix.",
+      "failure": "Le combat tourne mal et vous subissez des dégâts ou êtes désavantagé."
+    }
+  },
+  {
+    "id": "protect-someone",
+    "name": "Protéger quelqu’un",
+    "description": "Pour empêcher un personnage de subir des dégâts, lancez +Coriace.",
+    "rollStat": "tough",
+    "results": {
+      "success": "Vous protégez l’individu en question, mais subissez tout ou partie des dégâts à sa place. Sur un 10+, choisissez un effet supplémentaire :\n• Vous subissez moins de dégâts (-1 dégât).\n• C’est maintenant vous qui êtes en danger.\n• Vous infligez des dégâts à l’ennemi.\n• Vous tenez l’ennemi à distance.",
+      "mixed": "Vous protégez l’individu en question, mais subissez tout ou partie des dégâts à sa place.",
+      "failure": "La situation s’aggrave."
+    }
+  },
+  {
+    "id": "read-a-bad-situation",
+    "name": "Évaluer une situation qui craint",
+    "description": "Quand vous observez les environs et évaluez une situation qui craint, lancez +Futé.\n\nUn point de réserve peut être dépensé pour poser une des questions suivantes au Gardien :\n• Quelle est la meilleure façon d’entrer pour moi ?\n• Quelle est la meilleure façon de sortir pour moi ?\n• Y a-t-il des dangers que nous n’avons pas remarqués ?\n• Quelle est la plus grande menace ?\n• Qu’est-ce qui est le plus vulnérable selon moi ?\n• Quelle est la meilleure façon de protéger les victimes ?\n\nSi vous agissez conformément aux réponses obtenues, gagnez +1 constant tant que l’information est pertinente.",
+    "rollStat": "sharp",
+    "results": {
+      "success": "Réserve 3.",
+      "mixed": "Réserve 1.",
+      "failure": "Vous méjugez la situation ou dévoilez des détails tactiques à vos ennemis. Le Gardien peut alors vous poser les questions ci-dessus."
+    }
+  },
+  {
+    "id": "use-magic",
+    "name": "Utiliser la magie",
+    "description": "Quand vous utilisez la magie, détaillez ce que vous voulez faire et comment vous comptez y parvenir, puis lancez +Bizarre.\n\nPar défaut, la magie dure une trentaine de minutes.\n\nEffets :\n• Infliger des dégâts (1 dégât, ignore l’armure, magique, évident).\n• Enchanter une arme (+1 dégât, magique).\n• Faire une chose qui dépasse les limites humaines.\n• Barrer un lieu ou une porte pour un individu ou un type de créature précis.\n• Piéger un individu, sbire ou monstre précis.\n• Bannir un esprit ou lever une malédiction affectant un individu, un objet ou un lieu.\n• Invoquer un monstre.\n• Communiquer avec quelqu’un ou quelque chose dont vous ne connaissez pas la langue.",
+    "rollStat": "weird",
+    "results": {
+      "success": "La magie fonctionne comme prévu. Choisissez l’effet.",
+      "mixed": "Elle ne fonctionne pas totalement comme prévu. Choisissez l’effet et un pépin. Au Gardien de déterminer la nature de ce pépin.",
+      "failure": "Vous perdez le contrôle de la magie et ça finit mal."
+    }
+  }
+]

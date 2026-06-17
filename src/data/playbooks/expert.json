@@ -1,0 +1,147 @@
+{
+  "id": "expert",
+  "name": "L'Expert",
+  "description": "J'ai consacré ma vie à l'étude du surnaturel. Je connais les habitudes et les faiblesses de ces créatures. Mon savoir fait de moi la plus grande menace.",
+  "statArrays": [
+    { "id": "expert-1", "label": "Expert de terrain", "stats": { "charm": -1, "cool": 1, "sharp": 2, "tough": 1, "weird": 0 } },
+    { "id": "expert-2", "label": "Érudit mystique", "stats": { "charm": 0, "cool": 1, "sharp": 2, "tough": -1, "weird": 1 } },
+    { "id": "expert-3", "label": "Expert charismatique", "stats": { "charm": 1, "cool": -1, "sharp": 2, "tough": 1, "weird": 0 } },
+    { "id": "expert-4", "label": "Enquêteur", "stats": { "charm": -1, "cool": 1, "sharp": 2, "tough": 0, "weird": 1 } },
+    { "id": "expert-5", "label": "Archiviste occulte", "stats": { "charm": -1, "cool": 0, "sharp": 2, "tough": -1, "weird": 2 } }
+  ],
+  "moves": [
+    {
+      "id": "j-ai-lu",
+      "name": "J'ai lu des choses à ce sujet",
+      "description": "Lancez +Futé au lieu de +Cool quand vous agissez sous pression."
+    },
+    {
+      "id": "souvent-raison",
+      "name": "A souvent raison",
+      "description": "Quand un chasseur vient chercher conseil auprès de vous au sujet d'un problème, répondez-lui sincèrement. S'il écoute vos conseils, il gagne +1 constant tant qu'il les suit, et vous cochez de l'expérience."
+    },
+    {
+      "id": "etat-de-preparation",
+      "name": "État de préparation",
+      "description": "Quand vous avez besoin de quelque chose d'inhabituel ou de rare, lancez +Futé.",
+      "trigger": "Quand vous avez besoin de quelque chose d'inhabituel ou de rare",
+      "rollStat": "sharp",
+      "results": {
+        "success": "Vous l'obtenez sur-le-champ.",
+        "mixed": "Vous savez où le trouver, mais cela va vous demander un peu de temps.",
+        "failure": "Vous savez où le trouver, mais l'endroit craint vraiment."
+      }
+    },
+    {
+      "id": "pas-aussi-grave",
+      "name": "Ce n'est pas aussi grave qu'il n'y paraît",
+      "description": "Une fois par mystère, vous pouvez tenter de rester dans la course malgré vos blessures. Lancez +Cool.",
+      "trigger": "Une fois par mystère, quand vous voulez ignorer vos blessures",
+      "rollStat": "cool",
+      "results": {
+        "success": "Éliminez 2 dégâts et stabilisez vos blessures.",
+        "mixed": "Éliminez 1 dégât ou stabilisez vos blessures.",
+        "failure": "C'est pire qu'il n'y paraissait. Le Gardien peut vous infliger une manœuvre de dégâts ou rendre vos blessures instables."
+      }
+    },
+    {
+      "id": "coup-precis",
+      "name": "Coup précis",
+      "description": "Quand vous infligez des dégâts à un monstre, vous pouvez viser un point faible. Lancez +Coriace.",
+      "trigger": "Quand vous infligez des dégâts à un monstre et visez un point faible",
+      "rollStat": "tough",
+      "results": {
+        "success": "Vous infligez +2 dégâts.",
+        "mixed": "Vous infligez +1 dégât.",
+        "failure": "Vous offrez au monstre l'occasion de vous toucher."
+      }
+    },
+    {
+      "id": "j-avais-un-plan",
+      "name": "J'avais un plan",
+      "description": "Au début de chaque mystère, lancez +Futé.",
+      "trigger": "Au début de chaque mystère",
+      "rollStat": "sharp",
+      "results": {
+        "success": "Réserve 2. Dépensez la réserve pour être là où vous le devez, parfaitement préparé.",
+        "mixed": "Réserve 1. Dépensez la réserve pour être là où vous le devez, parfaitement préparé.",
+        "failure": "Le Gardien obtient réserve 1 qu'il peut dépenser pour que vous vous retrouviez au pire endroit, totalement pris au dépourvu."
+      }
+    },
+    {
+      "id": "sombre-passe",
+      "name": "Sombre passé",
+      "description": "Vous vous êtes essayé aux pires arts mystiques avant de rejoindre le camp des gentils. Si vous parcourez vos souvenirs en quête d'informations en rapport avec l'affaire en cours, lancez +Bizarre.",
+      "trigger": "Quand vous parcourez vos souvenirs occultes en rapport avec l'affaire",
+      "rollStat": "weird",
+      "results": {
+        "success": "Posez au Gardien deux questions parmi : Quand j'ai eu affaire à cette créature, qu'ai-je appris ? / Connais-je une forme de magie noire qui pourrait m'être utile ? / Connais-je quelqu'un qui pourrait être derrière tout ceci ? / Connais-je quelqu'un qui pourrait nous aider ?",
+        "mixed": "Posez au Gardien une question parmi la liste.",
+        "failure": "Vous pouvez quand même poser une question, mais vous êtes en partie responsable de la situation."
+      }
+    }
+  ],
+  "moveChoices": {
+    "choose": 2,
+    "from": ["j-ai-lu", "souvent-raison", "etat-de-preparation", "pas-aussi-grave", "coup-precis", "j-avais-un-plan", "sombre-passe"]
+  },
+  "refuge": {
+    "choose": 3,
+    "options": [
+      { "id": "bibliotheque-connaissances", "name": "Bibliothèque de connaissances", "description": "Quand vous compulsez vos ouvrages, gagnez +1 temporaire pour enquêter sur un mystère (si les ouvrages sont pertinents)." },
+      { "id": "bibliotheque-mystique", "name": "Bibliothèque mystique", "description": "Quand vous compulsez vos grimoires et ouvrages occultes, gagnez +1 temporaire pour utiliser la magie." },
+      { "id": "sorts-protection", "name": "Sorts de protection", "description": "Votre refuge est à l'abri des monstres. Ils ne peuvent tout simplement pas y entrer." },
+      { "id": "arsenal", "name": "Arsenal", "description": "Vous disposez d'armes et objets rares dangereux pour les monstres. Lancez +Bizarre pour accéder à une arme spéciale." },
+      { "id": "infirmerie", "name": "Infirmerie", "description": "Vous pouvez soigner les gens et disposez d'assez d'espace pour permettre à une ou deux personnes de se remettre." },
+      { "id": "atelier", "name": "Atelier", "description": "Vous avez l'espace nécessaire pour produire et réparer des armes, véhicules et autres gadgets." },
+      { "id": "oubliette", "name": "Oubliette", "description": "Cette pièce est isolée de tout type de monstre, esprit et magie. Rien de ce que vous y stockez ne peut être trouvé, produire de la magie ou en sortir." },
+      { "id": "panic-room", "name": "Panic room", "description": "Elle renferme des provisions et dispose de protections normales et mystiques. Vous pouvez y rester caché pendant des jours à l'abri de presque tout." },
+      { "id": "laboratoire-magique", "name": "Laboratoire magique", "description": "Vous possédez un laboratoire mystique avec toutes sortes d'ingrédients et outils exotiques pour lancer des sorts." }
+    ]
+  },
+  "gearChoices": [
+    {
+      "id": "expert-weapons",
+      "label": "Choisissez trois armes tueuses de monstres",
+      "choose": 3,
+      "options": [
+        { "id": "pieux-maillet", "name": "Pieux en bois et maillet", "harm": 3, "tags": ["personnel", "lent", "bois"] },
+        { "id": "epee-argent", "name": "Épée en argent", "harm": 2, "tags": ["allonge", "sanglant", "argent"] },
+        { "id": "epee-fer-froid", "name": "Épée en fer froid", "harm": 2, "tags": ["allonge", "sanglant", "fer"] },
+        { "id": "poignard-beni", "name": "Poignard béni", "harm": 2, "tags": ["allonge", "béni"] },
+        { "id": "dague-magique", "name": "Dague magique", "harm": 2, "tags": ["allonge", "magique"] }
+      ]
+    }
+  ],
+  "histories": [
+    "C'est votre élève, votre apprenti, votre protégé, ou votre enfant. Décidez-en tous les deux.",
+    "Il est venu pour vos conseils, qui l'ont tiré d'affaire. Demandez-lui en quoi consistait le problème.",
+    "Il connaît un de vos pires secrets, mais a accepté de ne rien en dire. Précisez-lui ce qu'il sait.",
+    "Un parent éloigné. Dites-lui exactement en quoi.",
+    "Vous avez tous deux été membres d'un groupe ésotérique, désormais dissous. Demandez-lui pourquoi il l'a quitté.",
+    "Il vous a jadis aidé à mettre la main sur un objet singulier qui fait maintenant partie de votre refuge. Dites-lui ce dont il s'agissait.",
+    "Vous avez été formés par le même maître. Demandez-lui comment cela s'est terminé.",
+    "Vous lui avez sauvé la vie en le tirant d'une position très délicate. Dites-lui ce qui s'est passé."
+  ],
+  "advancements": [
+    "Gagnez +1 Futé (+3 max.).",
+    "Gagnez +1 Charme (+2 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Gagnez +1 Bizarre (+2 max.).",
+    "Prenez une autre manœuvre d'Expert.",
+    "Prenez une autre manœuvre d'Expert.",
+    "Ajoutez une option à votre refuge.",
+    "Ajoutez une option à votre refuge.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

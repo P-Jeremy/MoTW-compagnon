@@ -1,0 +1,342 @@
+{
+  "id": "professional",
+  "name": "Le Professionnel",
+  "description": "Aussi étrange que cela puisse paraître, mon métier consiste à traquer des monstres. Mais c'est le boulot que j'ai choisi le jour où j'ai endossé l'uniforme. Ça paye bien et les avantages ne sont pas négligeables.",
+  "statArrays": [
+    {
+      "id": "professional-1",
+      "label": "Soldat d'élite",
+      "stats": {
+        "charm": 0,
+        "cool": 2,
+        "sharp": -1,
+        "tough": 2,
+        "weird": -1
+      }
+    },
+    {
+      "id": "professional-2",
+      "label": "Agent polyvalent",
+      "stats": {
+        "charm": -1,
+        "cool": 2,
+        "sharp": 1,
+        "tough": 1,
+        "weird": 0
+      }
+    },
+    {
+      "id": "professional-3",
+      "label": "Agent charismatique",
+      "stats": {
+        "charm": 1,
+        "cool": 2,
+        "sharp": 1,
+        "tough": -1,
+        "weird": 0
+      }
+    },
+    {
+      "id": "professional-4",
+      "label": "Agent mystérieux",
+      "stats": {
+        "charm": -1,
+        "cool": 2,
+        "sharp": 1,
+        "tough": 0,
+        "weird": 1
+      }
+    },
+    {
+      "id": "professional-5",
+      "label": "Analyste de terrain",
+      "stats": {
+        "charm": 0,
+        "cool": 2,
+        "sharp": 2,
+        "tough": -1,
+        "weird": -1
+      }
+    }
+  ],
+  "moves": [
+    {
+      "id": "tourner-vers-agence",
+      "name": "Quand vous vous tournez vers l'agence",
+      "description": "Pour demander de l'aide ou de l'équipement, ou vous excuser pour un échec, lancez +Futé.",
+      "trigger": "Quand vous contactez l'agence pour demander aide, équipement ou vous excuser",
+      "rollStat": "sharp",
+      "results": {
+        "success": "C'est tout bon : votre demande en matériel ou personnel est validée, ou votre faute passe inaperçue.",
+        "mixed": "Les choses se corsent : vous vous faites souffler dans les bronches par vos supérieurs et il y a des répercussions, mais vous obtenez ce dont vous avez besoin.",
+        "failure": "Vous avez merdé : vous êtes suspendu, faites l'objet d'une enquête ou n'êtes plus en odeur de sainteté."
+      }
+    },
+    {
+      "id": "ne-montre-rien",
+      "name": "Ne montre rien",
+      "description": "Si vous le souhaitez, vous pouvez prendre jusqu'à +3 bonus quand vous agissez sous pression. Pour chaque +1 utilisé, le Gardien gagne réserve 1. Cette réserve peut être dépensée plus tard pour vous donner -1 à une manœuvre, sauf quand vous agissez sous pression."
+    },
+    {
+      "id": "imperturbable",
+      "name": "Imperturbable",
+      "description": "Gagnez +1 Cool (+3 max.)."
+    },
+    {
+      "id": "conscience-champ-bataille",
+      "name": "Conscience du champ de bataille",
+      "description": "Vous savez toujours ce qui se passe autour de vous et ce dont il faut vous méfier. Gagnez +1 armure (armure 2 max.) en plus de ce que vous confère votre équipement."
+    },
+    {
+      "id": "on-ne-laisse-personne",
+      "name": "On ne laisse personne derrière",
+      "description": "Au combat, quand vous aidez quelqu'un à s'enfuir, lancez +Futé.",
+      "trigger": "Au combat, quand vous aidez quelqu'un à s'enfuir",
+      "rollStat": "sharp",
+      "results": {
+        "success": "L'intéressé s'en sort sans problème.",
+        "mixed": "Il s'en sort ou ne subit pas de dégâts, comme vous voulez.",
+        "failure": "Vous ne lui permettez pas de s'enfuir et vous attirez l'attention de l'ennemi."
+      }
+    },
+    {
+      "id": "genie-tactique",
+      "name": "Génie tactique",
+      "description": "Quand vous évaluez une situation qui craint, vous pouvez lancer +Cool au lieu de +Futé."
+    },
+    {
+      "id": "toubbib",
+      "name": "Toubib'",
+      "description": "Vous possédez une trousse de premiers secours et êtes capable de soigner les gens. Quand vous prodiguez les premiers soins, lancez +Cool.",
+      "trigger": "Quand vous prodiguez les premiers soins",
+      "rollStat": "cool",
+      "results": {
+        "success": "Le patient est stabilisé et élimine 2 dégâts.",
+        "mixed": "Éliminez 2 dégâts ou stabilisez le patient.",
+        "failure": "Vous infligez 1 dégât supplémentaire."
+      }
+    },
+    {
+      "id": "mobilite",
+      "name": "Mobilité",
+      "description": "Vous avez un véhicule adapté à la chasse aux monstres. Choisissez deux qualités (spacieux, matériel de surveillance, rapide, discret, intimidant, classique, antenne médicale, couchage, réserve d'outils, armes dissimulées, anonyme, blindé, robuste, cage à monstre) et un défaut (bruyant, voyant, capricieux, esquinté, gourmand en carburant, inconfortable, lent, vieux)."
+    }
+  ],
+  "moveChoices": {
+    "choose": 3,
+    "from": [
+      "ne-montre-rien",
+      "imperturbable",
+      "conscience-champ-bataille",
+      "on-ne-laisse-personne",
+      "genie-tactique",
+      "toubbib",
+      "mobilite"
+    ],
+    "fixed": [
+      "tourner-vers-agence"
+    ]
+  },
+  "agency": {
+    "resources": {
+      "choose": 2,
+      "options": [
+        "Bon armement",
+        "Bon financement",
+        "Entraînement sérieux",
+        "Existence officielle",
+        "Couvertures",
+        "Nombreux bureaux",
+        "Bons services de renseignement",
+        "Autorité reconnue",
+        "Gadgets technologiques exotiques",
+        "Équipes d'appui"
+      ]
+    },
+    "administration": {
+      "choose": 2,
+      "options": [
+        "Motivations douteuses",
+        "Bureaucratie",
+        "Hiérarchie secrète",
+        "Missions énigmatiques",
+        "Supérieures hostiles",
+        "Rivalité entre départements",
+        "Coupes budgétaires",
+        "Pas de prisonniers",
+        "Politique de capture des spécimens"
+      ]
+    }
+  },
+  "gearChoices": [
+    {
+      "id": "professional-heavy",
+      "label": "Choisissez une arme lourde",
+      "choose": 1,
+      "options": [
+        {
+          "id": "fusil-assaut-pr",
+          "name": "Fusil d'assaut",
+          "harm": 3,
+          "tags": [
+            "loin",
+            "zone",
+            "bruyant",
+            "rechargement"
+          ]
+        },
+        {
+          "id": "lance-grenades",
+          "name": "Lance-grenades",
+          "harm": 4,
+          "tags": [
+            "loin",
+            "zone",
+            "sanglant",
+            "bruyant",
+            "rechargement"
+          ]
+        },
+        {
+          "id": "fusil-sniper-pr",
+          "name": "Fusil de sniper",
+          "harm": 4,
+          "tags": [
+            "loin"
+          ]
+        },
+        {
+          "id": "grenades",
+          "name": "Grenades",
+          "harm": 4,
+          "tags": [
+            "proche",
+            "zone",
+            "sanglant",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "mitraillette",
+          "name": "Mitraillette",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "zone",
+            "bruyant",
+            "rechargement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "professional-normal",
+      "label": "Choisissez deux armes normales",
+      "choose": 2,
+      "options": [
+        {
+          "id": "revolver-38-pr",
+          "name": "Revolver, calibre .38",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "rechargement",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "9mm-pr",
+          "name": "9 mm",
+          "harm": 2,
+          "tags": [
+            "proche",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "fusil-chasse-pr",
+          "name": "Fusil de chasse",
+          "harm": 2,
+          "tags": [
+            "loin",
+            "bruyant"
+          ]
+        },
+        {
+          "id": "fusil-pompe-pr",
+          "name": "Fusil à pompe",
+          "harm": 3,
+          "tags": [
+            "proche",
+            "sanglant"
+          ]
+        },
+        {
+          "id": "couteau-chasse-pr",
+          "name": "Couteau de chasse",
+          "harm": 1,
+          "tags": [
+            "allonge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "professional-armor",
+      "label": "Choisissez une protection",
+      "choose": 1,
+      "options": [
+        {
+          "id": "gilet-pare-balles",
+          "name": "Gilet pare-balles",
+          "harm": 0,
+          "tags": [
+            "armure 1",
+            "caché"
+          ]
+        },
+        {
+          "id": "armure-combat",
+          "name": "Armure de combat",
+          "harm": 0,
+          "tags": [
+            "armure 2",
+            "lourd"
+          ]
+        }
+      ]
+    }
+  ],
+  "histories": [
+    "Votre relation a un potentiel amoureux. Pour l'instant, cela n'a pas été plus loin.",
+    "Il est sur la liste de l'agence et vous gardez un œil sur lui.",
+    "Vous êtes parents. À vous de lui préciser votre degré de parenté.",
+    "Vous vous êtes rencontrés en mission et avez travaillé ensemble officieusement. Avec succès.",
+    "Il a déjà travaillé avec l'agence et est bien vu.",
+    "Vous étiez amis du temps de votre formation, avant que l'agence ne vous recrute.",
+    "Il vous a tiré (vous et peut-être votre équipe) d'une mission particulièrement merdique.",
+    "On vous a chargé de vous en « occuper », car il représentait un danger pour l'agence. Dites-lui comment vous avez réglé cela."
+  ],
+  "advancements": [
+    "Gagnez +1 Cool (+3 max.).",
+    "Gagnez +1 Futé (+2 max.).",
+    "Gagnez +1 Charme (+2 max.).",
+    "Gagnez +1 Coriace (+2 max.).",
+    "Prenez une autre manœuvre de Professionnel.",
+    "Prenez une autre manœuvre de Professionnel.",
+    "Prenez le commandement d'une équipe de chasseurs de monstres de l'agence.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Ajoutez un nouveau trait de ressource à votre agence, ou changez un trait d'administration."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Tout ou partie des chasseurs des autres joueurs sont engagés par votre agence. Ils gagnent la manœuvre se tourner vers l'agence, ainsi qu'un salaire et des avantages.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

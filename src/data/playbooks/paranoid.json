@@ -1,0 +1,138 @@
+{
+  "id": "paranoid",
+  "name": "Le Parano",
+  "description": "Tout est lié. Mais tout le monde ne le voit pas, car la plupart des gens ne prennent pas la peine de regarder. Moi, je ne peux m'empêcher d'observer. Je ne peux me détourner de la vérité. Je vois les motifs.",
+  "statArrays": [
+    { "id": "paranoid-1", "label": "Observateur", "stats": { "charm": 1, "cool": 1, "sharp": 2, "tough": -1, "weird": 0 } },
+    { "id": "paranoid-2", "label": "Théoricien", "stats": { "charm": 0, "cool": 1, "sharp": 2, "tough": -1, "weird": 1 } },
+    { "id": "paranoid-3", "label": "Conspirateur", "stats": { "charm": 1, "cool": -1, "sharp": 2, "tough": 1, "weird": 0 } },
+    { "id": "paranoid-4", "label": "Paranoïaque perspicace", "stats": { "charm": 1, "cool": -1, "sharp": 2, "tough": 0, "weird": 1 } },
+    { "id": "paranoid-5", "label": "Visionnaire fou", "stats": { "charm": -1, "cool": -1, "sharp": 2, "tough": 0, "weird": 2 } }
+  ],
+  "moves": [
+    {
+      "id": "etablir-des-liens",
+      "name": "Établir des liens",
+      "description": "Au début de chaque mystère, si vous cherchez le tableau d'ensemble dans lequel s'inscrivent les événements en cours, lancez +Futé.",
+      "trigger": "Au début de chaque mystère, si vous cherchez le tableau d'ensemble",
+      "rollStat": "sharp",
+      "results": {
+        "success": "Réserve 3. Dépensez pour poser une question au Gardien : Cette personne est-elle plus liée aux événements qu'elle ne le prétend ? / Quand et où se déroulera le prochain événement critique ? / Que veut le monstre à cette personne ? / Est-ce lié à des mystères sur lesquels nous avons déjà enquêté ? / En quoi ce mystère est-il lié au tableau d'ensemble ?",
+        "mixed": "Réserve 1. Dépensez pour poser une question au Gardien.",
+        "failure": "Aucune réserve."
+      }
+    },
+    {
+      "id": "regard-fou",
+      "name": "Regard fou",
+      "description": "Vous gagnez +1 Bizarre (+3 max.)."
+    },
+    {
+      "id": "regardez-tout-colle",
+      "name": "Regardez, tout colle",
+      "description": "Vous pouvez utiliser Futé au lieu de Charme quand vous manipulez quelqu'un."
+    },
+    {
+      "id": "esprit-soupconneux",
+      "name": "Esprit soupçonneux",
+      "description": "Quand quelqu'un vous ment, vous le savez."
+    },
+    {
+      "id": "souvent-sous-estime",
+      "name": "Souvent sous-estimé",
+      "description": "Quand vous faites n'importe quoi pour éviter quelque chose, lancez +Bizarre.",
+      "trigger": "Quand vous faites n'importe quoi pour éviter quelque chose",
+      "rollStat": "weird",
+      "results": {
+        "success": "Vous êtes perçu comme inoffensif et sans intérêt.",
+        "mixed": "Au choix : inoffensif ou sans intérêt.",
+        "failure": "Vous attirez une bonne partie de l'attention."
+      }
+    },
+    {
+      "id": "contraire",
+      "name": "Contraire",
+      "description": "Quand vous cherchez et obtenez les conseils honnêtes de quelqu'un sur la meilleure marche à suivre et que vous faites autre chose, cochez de l'expérience. Si vous faites totalement le contraire, vous gagnez aussi +1 constant sur les manœuvres effectuées dans ce sens."
+    },
+    {
+      "id": "amis-du-net",
+      "name": "Amis du Net",
+      "description": "Vous connaissez beaucoup de gens sur Internet. Quand vous contactez un ami du Net pour qu'il vous aide dans le cadre d'un mystère, lancez +Charme.",
+      "trigger": "Quand vous contactez un ami du Net pour qu'il vous aide",
+      "rollStat": "charm",
+      "results": {
+        "success": "Il est disponible et vous aide : il peut réparer quelque chose, casser un code, pirater un ordinateur, ou vous dégoter des informations bien précises.",
+        "mixed": "Il est prêt à vous aider, mais cela lui prendra du temps ou vous devrez participer à l'effort.",
+        "failure": "Vous brûlez vos cartouches."
+      }
+    },
+    {
+      "id": "furtif",
+      "name": "Furtif",
+      "description": "Quand vous attaquez dans le cadre d'une embuscade ou par-derrière, infligez +2 dégâts."
+    }
+  ],
+  "moveChoices": {
+    "choose": 3,
+    "from": ["etablir-des-liens", "regard-fou", "regardez-tout-colle", "esprit-soupconneux", "souvent-sous-estime", "contraire", "amis-du-net", "furtif"]
+  },
+  "gearChoices": [
+    {
+      "id": "paranoid-normal",
+      "label": "Choisissez une arme normale",
+      "choose": 1,
+      "options": [
+        { "id": "revolver-38-p", "name": "Revolver, calibre .38", "harm": 2, "tags": ["proche", "rechargement", "bruyant"] },
+        { "id": "9mm-p", "name": "9 mm", "harm": 2, "tags": ["proche", "bruyant"] },
+        { "id": "fusil-chasse-p", "name": "Fusil de chasse", "harm": 2, "tags": ["loin", "bruyant"] },
+        { "id": "magnum-p", "name": "Magnum", "harm": 3, "tags": ["proche", "rechargement", "bruyant"] },
+        { "id": "fusil-pompe-p", "name": "Fusil à pompe", "harm": 3, "tags": ["proche", "sanglant", "bruyant"] },
+        { "id": "poignard-p", "name": "Poignard", "harm": 1, "tags": ["allonge"] }
+      ]
+    },
+    {
+      "id": "paranoid-hidden",
+      "label": "Choisissez deux armes cachées",
+      "choose": 2,
+      "options": [
+        { "id": "couteaux-lancer", "name": "Couteaux de lancer", "harm": 1, "tags": ["proche", "multiple"] },
+        { "id": "pistolet-poche", "name": "Pistolet de poche", "harm": 2, "tags": ["proche", "rechargement", "bruyant"] },
+        { "id": "garrot", "name": "Garrot", "harm": 3, "tags": ["personnel"] },
+        { "id": "lampe-torche", "name": "Lampe torche de vigile", "harm": 1, "tags": ["allonge"] },
+        { "id": "gants-mma", "name": "Gants de MMA / coup-de-poing américain", "harm": 1, "tags": ["allonge"] },
+        { "id": "couteau-papillon", "name": "Couteau papillon / pliable", "harm": 1, "tags": ["allonge"] }
+      ]
+    }
+  ],
+  "histories": [
+    "D'une façon ou d'une autre, il est lié aux événements. Vous gardez un œil sur lui.",
+    "Parent proche. Demandez-lui quel est votre lien de parenté exact.",
+    "Vous êtes de vieux amis et vous êtes initialement rencontrés suite à diverses coïncidences.",
+    "Vous avez connu l'enfer tous les deux : peut-être un monstre, le service militaire ou une institution psychiatrique. Vous avez noué des liens étroits.",
+    "Vous êtes membres du même groupe de soutien.",
+    "Un autre taré.",
+    "Tout vous a poussés à travailler ensemble. Vous l'avez trouvé et maintenant vous travaillez ensemble.",
+    "Vous vous êtes connus grâce à des sites web de cryptozoologie ou conspirationnistes."
+  ],
+  "advancements": [
+    "Gagnez +1 Futé (+3 max.).",
+    "Gagnez +1 Charme (+2 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Gagnez +1 Bizarre (+2 max.).",
+    "Prenez une autre manœuvre de Parano.",
+    "Prenez une autre manœuvre de Parano.",
+    "Gagnez un refuge, comme l'Expert, avec deux options.",
+    "Gagnez une autre option de refuge.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "divine",
+  "name": "Le Divin",
+  "description": "Je suis la Lumière, l'Épée. Je suis l'envoyé qui protège les faibles des Ténèbres. Le Mal me craint, car j'en sonne le glas.",
+  "statArrays": [
+    { "id": "divine-1", "label": "Guerrier divin", "stats": { "charm": 1, "cool": 1, "sharp": -1, "tough": 2, "weird": 0 } },
+    { "id": "divine-2", "label": "Champion divin", "stats": { "charm": -1, "cool": 2, "sharp": -1, "tough": 2, "weird": 0 } },
+    { "id": "divine-3", "label": "Envoyé mystique", "stats": { "charm": -1, "cool": 0, "sharp": 1, "tough": 2, "weird": 1 } },
+    { "id": "divine-4", "label": "Ange gardien", "stats": { "charm": 1, "cool": 1, "sharp": 0, "tough": 2, "weird": -1 } },
+    { "id": "divine-5", "label": "Divin austère", "stats": { "charm": -1, "cool": 1, "sharp": 0, "tough": 2, "weird": 1 } }
+  ],
+  "moves": [
+    {
+      "id": "maitre-au-dela",
+      "name": "Maître de l'au-delà",
+      "description": "Au début de chaque mystère, lancez +Bizarre. Sur un 10+, vos supérieurs vous demandent d'exécuter une tâche simple. Sur un 7-9, la mission est compliquée ou difficile. Dans tous les cas, posez-leur une question de la manœuvre enquêter sur un mystère sur-le-champ. En cas d'échec, il vous est demandé de faire quelque chose de terrible.",
+      "trigger": "Au début de chaque mystère",
+      "rollStat": "weird",
+      "results": {
+        "success": "Vos supérieurs vous demandent d'exécuter une tâche simple. Posez-leur une question d'enquêter sur un mystère sur-le-champ.",
+        "mixed": "La mission est compliquée ou difficile. Posez-leur quand même une question d'enquêter sur un mystère.",
+        "failure": "Il vous est demandé de faire quelque chose de terrible. Si vous refusez, cette manœuvre est inutilisable jusqu'à ce que vous ayez racheté votre échec."
+      }
+    },
+    {
+      "id": "ailes-d-ange",
+      "name": "Ailes d'ange",
+      "description": "Vous pouvez vous rendre instantanément en n'importe quel endroit que vous avez déjà visité ou jusqu'à une personne que vous connaissez bien. Quand vous portez une ou deux personnes, lancez +Bizarre.",
+      "trigger": "Quand vous vous téléportez en portant une ou deux personnes",
+      "rollStat": "weird",
+      "results": {
+        "success": "Vous vous rendez tous où vous le souhaitiez.",
+        "mixed": "Vous n'y parvenez pas : vous êtes séparés, ou vous réapparaissez au mauvais endroit.",
+        "failure": "Quelque chose tourne mal."
+      }
+    },
+    {
+      "id": "ce-dont-j-ai-besoin",
+      "name": "Ce dont j'ai besoin, quand j'en ai besoin",
+      "description": "Vous pouvez ranger un petit objet qui vous appartient dans un espace magique auquel nul ne peut accéder. Vous pouvez y récupérer ce que vous y avez mis à tout moment ; l'objet apparaît alors dans votre main."
+    },
+    {
+      "id": "apaisement",
+      "name": "Apaisement",
+      "description": "Quand vous parlez à quelqu'un d'une voix calme pendant quelques secondes, vous l'apaisez, refoulez sa panique, sa colère ou toute autre émotion négative. Cette manœuvre fonctionne même si la source de l'émotion est encore présente tant que votre voix est audible."
+    },
+    {
+      "id": "imposition-des-mains",
+      "name": "Imposition des mains",
+      "description": "Vous soignez les blessures et les maladies d'un simple contact. Quand vous imposez vos mains sur une personne blessée, lancez +Cool.",
+      "trigger": "Quand vous imposez vos mains sur une personne blessée",
+      "rollStat": "cool",
+      "results": {
+        "success": "Soignez 2 dégâts ou une maladie, et la cible est stabilisée.",
+        "mixed": "Soignez 2 dégâts ou une maladie comme sur un 10+, mais vous en faites les frais.",
+        "failure": "Votre aura lui inflige 1 dégât supplémentaire."
+      }
+    },
+    {
+      "id": "rejet-du-mal",
+      "name": "Rejet du mal",
+      "description": "Vous pouvez bannir une créature surnaturelle. Lancez +Coriace.",
+      "trigger": "Quand vous bannissez une créature surnaturelle",
+      "rollStat": "tough",
+      "results": {
+        "success": "La cible est bannie.",
+        "mixed": "L'opération demande un peu de temps : la créature a le temps d'effectuer une ou deux actions.",
+        "failure": "Quelque chose l'empêche de partir."
+      }
+    },
+    {
+      "id": "chatiment",
+      "name": "Châtiment",
+      "description": "Votre corps et votre arme divine comptent toujours comme une faiblesse contre les monstres que vous combattez. Vos attaques à mains nues prennent la forme suivante : 2 dégâts, personnel, allonge, sanglant."
+    }
+  ],
+  "moveChoices": {
+    "choose": 3,
+    "from": ["maitre-au-dela", "ailes-d-ange", "ce-dont-j-ai-besoin", "apaisement", "imposition-des-mains", "rejet-du-mal", "chatiment"]
+  },
+  "mission": {
+    "options": [
+      "Vous êtes là pour déjouer les machinations d'un Adversaire.",
+      "La fin des temps approche. Votre rôle est de guider ces chasseurs et d'éviter l'apocalypse.",
+      "La fin des temps approche. Votre rôle est de guider ces chasseurs et de provoquer l'apocalypse.",
+      "Vous êtes en exil. Vous devez œuvrer pour la cause du Bien sans attirer l'attention de vos frères et sœurs, qui sont bien décidés à vous exécuter pour vos crimes.",
+      "Un des autres chasseurs a un rôle crucial à jouer dans les événements à venir. Vous devez le préparer à assumer son rôle et le protéger à tout prix."
+    ]
+  },
+  "gearChoices": [
+    {
+      "id": "divine-weapon",
+      "label": "Choisissez une arme divine",
+      "choose": 1,
+      "options": [
+        { "id": "epee-enflammee", "name": "Épée enflammée", "harm": 3, "tags": ["allonge", "feu", "béni"] },
+        { "id": "marteau-tonnerre", "name": "Marteau de tonnerre", "harm": 3, "tags": ["allonge", "étourdissement", "béni"] },
+        { "id": "fouet-barbele", "name": "Fouet barbelé", "harm": 3, "tags": ["allonge", "zone", "sanglant", "béni"] },
+        { "id": "sac-cinq-pouvoirs", "name": "Sac des cinq pouvoirs", "harm": 3, "tags": ["proche", "magique", "béni"] },
+        { "id": "trident-argent", "name": "Trident en argent", "harm": 3, "tags": ["allonge", "argent", "béni"] }
+      ]
+    }
+  ],
+  "histories": [
+    "Si votre mission consiste à protéger un autre chasseur, dites-lui : « Tu as un rôle crucial à jouer dans les événements à venir. Je suis là pour te guider et te défendre ».",
+    "Il ne devrait pas être mêlé à cette histoire : la prophétie ne parle pas de lui. Cela attire votre attention, mais vous ne savez pas encore ce que cela signifie.",
+    "Au fond de lui, c'est une personne bonne et juste. Vous devez l'aider à rester lui-même.",
+    "C'est une abomination qu'il faut détruire. Mais cela vous est impossible ; voyez avec lui pourquoi.",
+    "Ses prières vous ont appelé.",
+    "Il suscite en vous un désir charnel. Vous êtes quelque peu perturbé par ces émotions somme toute mortelles.",
+    "Il vous a sauvé la vie et vous comprenez (au moins sur le plan intellectuel) que vous lui êtes redevable.",
+    "C'est la personne vers laquelle vous vous tournez pour tout ce qui a trait aux affaires des mortels (sexe, alimentation, drogue, télévision, etc.)."
+  ],
+  "advancements": [
+    "Gagnez +1 Coriace (+3 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Gagnez +1 Charme (+2 max.).",
+    "Gagnez +1 Futé (+2 max.).",
+    "Gagnez +1 Bizarre (+2 max.).",
+    "Prenez une autre manœuvre de Divin.",
+    "Prenez une autre manœuvre de Divin.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret.",
+    "Gagnez un être divin mineur en tant qu'allié, envoyé par les puissances supérieures pour vous aider dans votre mission."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Changez de mission. Choisissez une mission différente parmi les options normales, ou (avec l'aval du Gardien) une mission de votre création.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}

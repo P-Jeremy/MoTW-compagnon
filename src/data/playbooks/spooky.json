@@ -1,0 +1,147 @@
+{
+  "id": "spooky",
+  "name": "L'Épouvantail",
+  "description": "Je peux faire des choses. Des choses dont les gens normaux sont incapables. Mais il y a un prix, que je n'ai pas encore totalement payé, et la note ne va pas tarder à tomber.",
+  "statArrays": [
+    { "id": "spooky-1", "label": "Psychique attentionné", "stats": { "charm": 1, "cool": 0, "sharp": 1, "tough": -1, "weird": 2 } },
+    { "id": "spooky-2", "label": "Psychique calme", "stats": { "charm": -1, "cool": 1, "sharp": 0, "tough": 1, "weird": 2 } },
+    { "id": "spooky-3", "label": "Psychique magnétique", "stats": { "charm": 2, "cool": 0, "sharp": -1, "tough": -1, "weird": 2 } },
+    { "id": "spooky-4", "label": "Psychique dur", "stats": { "charm": 0, "cool": -1, "sharp": 1, "tough": 1, "weird": 2 } },
+    { "id": "spooky-5", "label": "Psychique perspicace", "stats": { "charm": -1, "cool": -1, "sharp": 2, "tough": 0, "weird": 2 } }
+  ],
+  "moves": [
+    {
+      "id": "telepathie",
+      "name": "Télépathie",
+      "description": "Vous pouvez lire les pensées des gens et glisser des mots dans leur esprit. Cela peut vous permettre d'enquêter sur un mystère ou d'évaluer une situation qui craint sans être obligé de parler. Vous pouvez également manipuler quelqu'un sans parler."
+    },
+    {
+      "id": "malediction",
+      "name": "Malédiction",
+      "description": "Quand vous lancez un sort (en utilisant la magie), choisissez un effet supplémentaire : la cible tombe malade, la cible subit immédiatement 2 dégâts magiques (ignore l'armure), ou la cible brise un objet précieux ou important."
+    },
+    {
+      "id": "double-vue",
+      "name": "Double vue",
+      "description": "Vous voyez l'invisible, notamment les esprits et les influences magiques. Vous pouvez communiquer et négocier avec les esprits, qui vous donnent plus de chances de remarquer des indices quand vous enquêtez sur un mystère."
+    },
+    {
+      "id": "premonitions",
+      "name": "Prémonitions",
+      "description": "Au début de chaque mystère, lancez +Bizarre.",
+      "trigger": "Au début de chaque mystère",
+      "rollStat": "weird",
+      "results": {
+        "success": "Vous obtenez une vision détaillée d'un sale événement qui ne s'est pas encore déroulé. Gagnez +1 temporaire pour l'empêcher, et cochez de l'expérience si vous y parvenez.",
+        "mixed": "Vous recevez des images confuses. Cochez de l'expérience si vous empêchez l'événement.",
+        "failure": "Vous recevez une vision de mauvais augure vous concernant et le Gardien gagne réserve 3, qu'il peut assigner comme pénalité à vos jets (-1 par jet)."
+      }
+    },
+    {
+      "id": "pressentiments",
+      "name": "Pressentiments",
+      "description": "Quand quelque chose de mal arrive (ou est sur le point d'arriver) quelque part où vous ne vous trouvez pas, lancez +Futé.",
+      "trigger": "Quand quelque chose de mal arrive quelque part où vous ne vous trouvez pas",
+      "rollStat": "sharp",
+      "results": {
+        "success": "Vous découvrez où vous rendre juste à temps pour y parvenir.",
+        "mixed": "Vous arrivez à temps pour intervenir, mais pas pour l'empêcher complètement.",
+        "failure": "Vous arrivez à temps pour vous retrouver dans la mouise."
+      }
+    },
+    {
+      "id": "a-l-ecoute",
+      "name": "À l'écoute",
+      "description": "Vous pouvez accorder votre esprit sur un monstre ou un sbire. Lancez +Bizarre.",
+      "trigger": "Quand vous accordez votre esprit sur un monstre ou un sbire",
+      "rollStat": "weird",
+      "results": {
+        "success": "Réserve 3. Dépensez 1 réserve pour poser une question au Gardien et gagner +1 constant en rapport avec la réponse.",
+        "mixed": "Réserve 1. Dépensez 1 réserve pour poser une question au Gardien et gagner +1 constant en rapport avec la réponse.",
+        "failure": "Le monstre est conscient de votre présence."
+      }
+    },
+    {
+      "id": "gros-coup",
+      "name": "Gros coup",
+      "description": "Vous pouvez utiliser vos pouvoirs pour casser la gueule à quelqu'un. Lancez +Bizarre au lieu de +Coriace. L'attaque prend la forme suivante : 2 dégâts, proche, évident, ignore l'armure.",
+      "trigger": "Quand vous utilisez vos pouvoirs pour attaquer",
+      "rollStat": "weird",
+      "results": {
+        "success": "L'attaque réussit : 2 dégâts, proche, évident, ignore l'armure.",
+        "mixed": "L'attaque réussit avec des complications.",
+        "failure": "Vous subissez un contrecoup magique."
+      }
+    },
+    {
+      "id": "poisse",
+      "name": "Poisse",
+      "description": "Vous créez des coïncidences malheureuses. Quand vous portez la poisse à une cible, lancez +Bizarre.",
+      "trigger": "Quand vous portez la poisse à une cible",
+      "rollStat": "weird",
+      "results": {
+        "success": "Réserve 2. Dépensez pour interférer ou aider un chasseur (±1 temporaire), interférer avec un monstre ou sbire, infliger 1 dégât à la cible par accident, ou faire trouver/perdre quelque chose à la cible.",
+        "mixed": "Réserve 1. Mêmes options.",
+        "failure": "Le Gardien gagne réserve 2 contre vous et peut l'utiliser de la même façon."
+      }
+    }
+  ],
+  "moveChoices": {
+    "choose": 3,
+    "from": ["telepathie", "malediction", "double-vue", "premonitions", "pressentiments", "a-l-ecoute", "gros-coup", "poisse"]
+  },
+  "darkSide": {
+    "chooseTraits": 3,
+    "options": [
+      "Sautes d'humeur", "Violence", "Rage", "Dépression", "Autodestructeur", "Secrets",
+      "Soif de pouvoir", "Luxure", "Troubles compulsifs", "Sombre pacte", "Hallucinations",
+      "Culpabilité", "Douleur", "Inhumain", "Paranoïa", "Dépendance"
+    ]
+  },
+  "gearChoices": [
+    {
+      "id": "spooky-weapons",
+      "label": "Choisissez deux armes normales",
+      "choose": 2,
+      "options": [
+        { "id": "revolver-38-s", "name": "Revolver, calibre .38", "harm": 2, "tags": ["proche", "rechargement", "bruyant"] },
+        { "id": "9mm-s", "name": "9 mm", "harm": 2, "tags": ["proche", "bruyant"] },
+        { "id": "fusil-chasse-s", "name": "Fusil de chasse", "harm": 2, "tags": ["loin", "bruyant"] },
+        { "id": "fusil-pompe-s", "name": "Fusil à pompe", "harm": 3, "tags": ["proche", "sanglant", "bruyant"] },
+        { "id": "couteau-chasse-s", "name": "Couteau de chasse", "harm": 1, "tags": ["allonge"] }
+      ]
+    }
+  ],
+  "histories": [
+    "Il vous a appris à contrôler vos pouvoirs.",
+    "Vous êtes parents. Décidez ensemble de votre lien de parenté.",
+    "Vous êtes mariés ou entretenez une relation amoureuse. Décidez ensemble de sa nature.",
+    "Vous êtes de vieux amis et vous faites entièrement confiance.",
+    "Une fois, vous avez utilisé vos pouvoirs sur lui. À vous de décider si c'était pour des raisons égoïstes ou non, et dites-lui s'il l'a découvert.",
+    "Vous vous connaissez depuis quelque temps, mais depuis que vos pouvoirs se sont manifestés, vous gardez vos distances sur le plan émotionnel.",
+    "Vous espérez qu'il pourra vous aider à contrôler vos pouvoirs.",
+    "Il vous a vu utiliser vos pouvoirs pour des raisons égoïstes ou vindicatives. Demandez-lui qui était la victime, puis dites-lui ce que vous avez fait."
+  ],
+  "advancements": [
+    "Gagnez +1 Bizarre (+3 max.).",
+    "Gagnez +1 Charme (+2 max.).",
+    "Gagnez +1 Cool (+2 max.).",
+    "Gagnez +1 Futé (+2 max.).",
+    "Prenez une autre manœuvre d'Épouvantail.",
+    "Prenez une autre manœuvre d'Épouvantail.",
+    "Changez tout ou partie de vos traits du côté obscur.",
+    "Gagnez une bibliothèque mystique (comme l'option de refuge de l'Expert).",
+    "Prenez une manœuvre d'un autre livret.",
+    "Prenez une manœuvre d'un autre livret."
+  ],
+  "advancedAdvancements": [
+    "Gagnez +1 dans n'importe quelle caractéristique (+3 max.).",
+    "Changez le type de votre chasseur.",
+    "Créez un second chasseur pour le jouer en plus de celui-ci.",
+    "Cochez deux de vos manœuvres de base comme avancées.",
+    "Cochez deux autres de vos manœuvres de base comme avancées.",
+    "Retraite méritée.",
+    "Vous trouvez le moyen d'utiliser vos pouvoirs à moindres frais. Supprimez définitivement un de vos traits du côté obscur.",
+    "Regagnez un point de Chance utilisé."
+  ]
+}
