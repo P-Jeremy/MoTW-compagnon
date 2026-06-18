@@ -362,7 +362,7 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
           {hasPlaybookSection(playbook) ? (
             <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-soft">
               <div className="mb-3 flex items-center justify-between">
-                <h2 className="text-base font-bold text-ink">{fr.playbookSection.title}</h2>
+                <h2 className="text-base font-bold text-ink">Background</h2>
                 <button
                   type="button"
                   onClick={() => setEditingSection((v) => !v)}
@@ -386,7 +386,7 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
                   {fr.playbookSection.notConfigured}
                 </button>
               ) : (
-                <PlaybookSectionSummary choices={character.playbookSection} />
+                <PlaybookSectionSummary choices={character.playbookSection} playbook={playbook} />
               )}
             </section>
           ) : null}
@@ -528,8 +528,10 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
 
 function PlaybookSectionSummary({
   choices,
+  playbook,
 }: {
   choices: Record<string, string | string[]>;
+  playbook: Playbook;
 }) {
   const entries = Object.entries(choices).filter(([, v]) => {
     if (Array.isArray(v)) return v.length > 0;
@@ -540,14 +542,29 @@ function PlaybookSectionSummary({
 
   return (
     <dl className="grid gap-3 text-sm">
-      {entries.map(([key, value]) => (
-        <div key={key}>
-          <dt className="font-bold text-stone-900 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</dt>
-          <dd className="mt-1 text-stone-600">
-            {Array.isArray(value) ? value.join(', ') : value}
-          </dd>
-        </div>
-      ))}
+      {entries.map(([key, value]) => {
+        if (key === 'background' && typeof value === 'string') {
+          const move = playbook.moves.find((m) => m.id === value);
+          if (move) {
+            return (
+              <div key={key}>
+                <dd className="font-bold text-stone-900">{move.name}</dd>
+                {move.description && (
+                  <dd className="mt-1 text-stone-500 text-xs">{move.description}</dd>
+                )}
+              </div>
+            );
+          }
+        }
+        return (
+          <div key={key}>
+            <dt className="font-bold text-stone-900 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</dt>
+            <dd className="mt-1 text-stone-600">
+              {Array.isArray(value) ? value.join(', ') : value}
+            </dd>
+          </div>
+        );
+      })}
     </dl>
   );
 }
