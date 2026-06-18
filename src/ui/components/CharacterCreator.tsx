@@ -183,7 +183,10 @@ export function CharacterCreator({ playbooks, onCancel, onCreate }: CharacterCre
             {(() => {
               const fixedIds = playbook.moveChoices.fixed ?? [];
               const fixedMoves = playbook.moves.filter((m) => fixedIds.includes(m.id));
-              const choosableMoves = playbook.moves.filter((m) => !fixedIds.includes(m.id));
+              const fromIds = playbook.moveChoices.from ?? [];
+              const choosableMoves = fromIds.length > 0
+                ? playbook.moves.filter((m) => fromIds.includes(m.id))
+                : playbook.moves.filter((m) => !fixedIds.includes(m.id));
               return (
                 <>
                   {fixedMoves.length > 0 && (
