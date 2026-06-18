@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { playbooks, getPlaybook } from './application/playbookService';
 import type { Character } from './domain/types';
 import { loadCharacters, loadCharactersFromFile, saveCharacters } from './infrastructure/localStorageCharacterRepository';

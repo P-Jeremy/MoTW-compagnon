@@ -13,15 +13,14 @@ export default defineConfig({
           const filePath = path.join(server.config.root, "src/data/characters/characters.json");
 
           if (req.method === "GET") {
-            try {
-              const data = fs.readFileSync(filePath, "utf-8");
-              res.statusCode = 200;
-              res.setHeader("Content-Type", "application/json");
-              res.end(data);
-            } catch {
-              res.statusCode = 404;
-              res.end();
+            if (!fs.existsSync(filePath)) {
+              fs.mkdirSync(path.dirname(filePath), { recursive: true });
+              fs.writeFileSync(filePath, "[]", "utf-8");
             }
+            const data = fs.readFileSync(filePath, "utf-8");
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.end(data);
             return;
           }
 
