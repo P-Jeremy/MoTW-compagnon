@@ -1,7 +1,7 @@
 import { Plus, Upload, UserRound } from 'lucide-react';
 import { useRef } from 'react';
 import type { Character, Playbook } from '../../domain/types';
-import { normalizeCharacter } from '../../infrastructure/localStorageCharacterRepository';
+import { normalizeCharacter } from '../../infrastructure/characterRepository';
 import fr from '../../data/locales/fr.json';
 
 interface CharacterListProps {

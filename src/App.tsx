@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { playbooks, getPlaybook } from './application/playbookService';
 import type { Character } from './domain/types';
-import { loadCharacters, loadCharactersFromFile, saveCharacters } from './infrastructure/localStorageCharacterRepository';
+import { loadCharacters, saveCharacters } from './infrastructure/characterRepository';
 import { CharacterCreator } from './ui/components/CharacterCreator';
 import { CharacterList } from './ui/components/CharacterList';
 import { CharacterSheet } from './ui/components/CharacterSheet';
@@ -10,18 +10,20 @@ import fr from './data/locales/fr.json';
 type View = 'list' | 'create' | 'sheet';
 
 export default function App() {
-  const [characters, setCharacters] = useState<Character[]>(() => loadCharacters());
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [view, setView] = useState<View>('list');
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const loaded = useRef(false);
 
   useEffect(() => {
-    if (characters.length > 0) return;
-    loadCharactersFromFile().then((fromFile) => {
-      if (fromFile && fromFile.length > 0) setCharacters(fromFile);
+    loadCharacters().then((fromFile) => {
+      loaded.current = true;
+      setCharacters(fromFile ?? []);
     });
   }, []);
 
   useEffect(() => {
+    if (!loaded.current) return;
     saveCharacters(characters);
   }, [characters]);
 
