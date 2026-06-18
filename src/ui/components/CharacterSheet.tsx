@@ -110,11 +110,14 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
 
   const moves = useMemo(() => {
     const fixedIds = playbook.moveChoices.fixed ?? [];
-    const allIds = [...new Set([...fixedIds, ...character.moves])];
+    const backgroundId = typeof character.playbookSection?.background === 'string'
+      ? character.playbookSection.background
+      : undefined;
+    const allIds = [...new Set([...fixedIds, ...(backgroundId ? [backgroundId] : []), ...character.moves])];
     return allIds
       .map((id) => playbook.moves.find((move) => move.id === id))
       .filter((move): move is Move => Boolean(move));
-  }, [character.moves, playbook.moves, playbook.moveChoices.fixed]);
+  }, [character.moves, character.playbookSection, playbook.moves, playbook.moveChoices.fixed]);
 
   function updateTracker(key: 'luck' | 'xp' | 'harm', value: number) {
     const tracker: TrackerType = character[key];
