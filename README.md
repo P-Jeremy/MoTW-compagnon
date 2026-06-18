@@ -27,11 +27,10 @@ Clone le dépôt ou télécharge le ZIP depuis GitHub, puis ouvre un terminal da
 ### 3. Lancer en mode développement
 
 ```bash
-npm install
-npm run dev
+npm run dev:full
 ```
 
-Ouvre ensuite [http://localhost:5173](http://localhost:5173) dans ton navigateur.
+Lance simultanément le serveur Express (port `3000`) et Vite (port `5173`). Ouvre ensuite [http://localhost:5173](http://localhost:5173) dans ton navigateur.
 
 ---
 
