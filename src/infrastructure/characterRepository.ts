@@ -1,21 +1,6 @@
 import type { Character, Stats } from '../domain/types';
 
-const STORAGE_KEY = 'motw.characters.v1';
-
-export function loadCharacters(): Character[] {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return [];
-
-  try {
-    const parsed = JSON.parse(raw) as Character[];
-    return Array.isArray(parsed) ? parsed.map(normalizeCharacter) : [];
-  } catch {
-    return [];
-  }
-}
-
-
-export async function loadCharactersFromFile(): Promise<Character[] | null> {
+export async function loadCharacters(): Promise<Character[] | null> {
   try {
     const response = await fetch('/api/characters');
     if (!response.ok) return null;
@@ -27,12 +12,10 @@ export async function loadCharactersFromFile(): Promise<Character[] | null> {
 }
 
 export function saveCharacters(characters: Character[]): void {
-  const json = JSON.stringify(characters, null, 2);
-  localStorage.setItem(STORAGE_KEY, json);
   fetch('/api/characters', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: json,
+    body: JSON.stringify(characters, null, 2),
   }).catch(() => {});
 }
 
@@ -56,7 +39,6 @@ export function normalizeCharacter(character: Character): Character {
 
 function normalizeStats(stats: Stats | Record<string, number>): Stats {
   const values = stats as Record<string, number | undefined>;
-
   return {
     charm: values.charm ?? values.charme ?? 0,
     cool: values.cool ?? 0,
