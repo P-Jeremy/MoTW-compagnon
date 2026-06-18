@@ -54,12 +54,15 @@ export function PlaybookSectionPicker({ playbook, choices, onChange }: PlaybookS
   }
 
   if (playbook.background) {
+    const backgroundMoves = playbook.background.from
+      .map((id) => playbook.moves.find((m) => m.id === id))
+      .filter((m): m is NonNullable<typeof m> => Boolean(m));
     return (
-      <StringRadio
+      <ItemRadio
         label={fr.playbookSection.background}
-        options={playbook.background.from}
+        options={backgroundMoves}
         value={choices['background'] as string | undefined}
-        onChange={(v) => set('background', v)}
+        onChange={(id) => set('background', id)}
       />
     );
   }
