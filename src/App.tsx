@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { playbooks, getPlaybook } from './application/playbookService';
 import type { Character } from './domain/types';
-import { loadCharacters, saveCharacters } from './infrastructure/characterRepository';
+import { loadCharacters, addCharacter, updateCharacter, deleteCharacter } from './infrastructure/characterRepository';
 import { CharacterCreator } from './ui/components/CharacterCreator';
 import { CharacterList } from './ui/components/CharacterList';
 import { CharacterSheet } from './ui/components/CharacterSheet';
@@ -13,19 +13,11 @@ export default function App() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [view, setView] = useState<View>('list');
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const loaded = useRef(false);
-
   useEffect(() => {
     loadCharacters().then((fromFile) => {
-      loaded.current = true;
       setCharacters(fromFile ?? []);
     });
   }, []);
-
-  useEffect(() => {
-    if (!loaded.current) return;
-    saveCharacters(characters);
-  }, [characters]);
 
   const selectedCharacter = useMemo(
     () => characters.find((character) => character.id === selectedId),
@@ -34,12 +26,14 @@ export default function App() {
   const selectedPlaybook = selectedCharacter ? getPlaybook(selectedCharacter.playbookId) : undefined;
 
   function createCharacter(character: Character) {
+    addCharacter(character);
     setCharacters((current) => [...current, character]);
     setSelectedId(character.id);
     setView('sheet');
   }
 
-  function updateCharacter(character: Character) {
+  function handleUpdateCharacter(character: Character) {
+    updateCharacter(character);
     setCharacters((current) => current.map((item) => (item.id === character.id ? character : item)));
   }
 
@@ -47,12 +41,14 @@ export default function App() {
     if (!selectedCharacter) return;
     const confirmed = window.confirm(`${fr.sheet.deleteConfirm} ${selectedCharacter.name} ?`);
     if (!confirmed) return;
+    deleteCharacter(selectedCharacter.id);
     setCharacters((current) => current.filter((character) => character.id !== selectedCharacter.id));
     setSelectedId(null);
     setView('list');
   }
 
   function importCharacter(character: Character) {
+    addCharacter(character);
     setCharacters((current) => [...current, character]);
     setSelectedId(character.id);
     setView('sheet');
@@ -69,7 +65,7 @@ export default function App() {
         playbook={selectedPlaybook}
         onBack={() => setView('list')}
         onDelete={deleteSelectedCharacter}
-        onUpdate={updateCharacter}
+        onUpdate={handleUpdateCharacter}
       />
     );
   }
