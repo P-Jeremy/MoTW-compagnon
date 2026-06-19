@@ -11,11 +11,25 @@ export async function loadCharacters(): Promise<Character[] | null> {
   }
 }
 
-export function saveCharacters(characters: Character[]): void {
+export function addCharacter(character: Character): void {
   fetch('/api/characters', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(characters, null, 2),
+    body: JSON.stringify(character),
+  }).catch(() => {});
+}
+
+export function updateCharacter(character: Character): void {
+  fetch(`/api/characters/${character.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(character),
+  }).catch(() => {});
+}
+
+export function deleteCharacter(id: string): void {
+  fetch(`/api/characters/${id}`, {
+    method: 'DELETE',
   }).catch(() => {});
 }
 
