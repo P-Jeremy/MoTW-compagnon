@@ -32,6 +32,7 @@ function writeCharacters(characters) {
 
 app.post('/api/characters', (req, res) => {
   const characters = readCharacters();
+  if (Array.isArray(req.body)) return res.status(400).json({ error: 'legacy format rejected' });
   characters.push(req.body);
   writeCharacters(characters);
   res.json({ ok: true });

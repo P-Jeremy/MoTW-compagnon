@@ -540,6 +540,20 @@ function PlaybookSectionSummary({
 
   if (entries.length === 0) return null;
 
+  function sectionLabel(key: string): string {
+    const locale = fr.playbookSection as Record<string, unknown>;
+    const raw = typeof locale[key] === 'string' ? (locale[key] as string) : null;
+    return (raw ?? key.replace(/([A-Z])/g, ' $1').trim()).replace(/s*(choisir d+.*?)$/, '');
+  }
+
+  function resolveValue(key: string, id: string): string {
+    if (!playbook.species) return id;
+    if (key === 'curse') return playbook.species.curseOptions.find((o) => o.id === id)?.name ?? id;
+    if (key === 'naturalAttacksBase') return playbook.species.naturalAttacks.base.find((o) => o.id === id)?.name ?? id;
+    if (key === 'naturalAttacksSupplementary') return playbook.species.naturalAttacks.supplementary.find((o) => o.id === id)?.name ?? id;
+    return id;
+  }
+
   return (
     <dl className="grid gap-3 text-sm">
       {entries.map(([key, value]) => {
@@ -556,12 +570,13 @@ function PlaybookSectionSummary({
             );
           }
         }
+        const displayValue = Array.isArray(value)
+          ? value.map((v) => resolveValue(key, v)).join(', ')
+          : resolveValue(key, value);
         return (
           <div key={key}>
-            <dt className="font-bold text-stone-900 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</dt>
-            <dd className="mt-1 text-stone-600">
-              {Array.isArray(value) ? value.join(', ') : value}
-            </dd>
+            <dt className="font-bold text-stone-900 capitalize">{sectionLabel(key)}</dt>
+            <dd className="mt-1 text-stone-600">{displayValue}</dd>
           </div>
         );
       })}
