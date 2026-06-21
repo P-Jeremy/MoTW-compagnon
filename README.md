@@ -10,7 +10,8 @@ Application web pour gérer les fiches de personnage à **Monster of the Week**.
 - Avancements interactifs, dont les manœuvres de base avancées (+1 au jet)
 - Section spécifique à chaque livret (Destin, Mission, Magie de combat…)
 - Export / import des fiches en JSON
-- Sauvegarde automatique (partagée entre tous les joueurs connectés)
+- **Édition collaborative en temps réel** : plusieurs joueurs peuvent modifier la même fiche simultanément sans écrasement (CRDT Automerge), avec indicateur de présence
+- Fonctionne hors-ligne (cache local IndexedDB) puis se resynchronise à la reconnexion
 
 ---
 
@@ -36,7 +37,10 @@ Lance simultanément le serveur Express (port `3000`) et Vite (port `5173`). Ouv
 
 ## Hébergement sur un serveur (multijoueur)
 
-Les personnages sont stockés dans un fichier JSON côté serveur — tous les joueurs connectés voient les mêmes fiches en temps réel.
+Le serveur agit comme **pair de synchronisation CRDT** (Automerge) : il relaie les
+modifications entre tous les clients connectés par WebSocket et persiste chaque fiche
+sur disque. Deux joueurs peuvent éditer la même fiche en même temps — les changements
+fusionnent automatiquement, sans conflit ni écrasement.
 
 ### 1. Installer les dépendances
 
@@ -62,7 +66,12 @@ Par défaut sur le port `3000`. Pour changer de port :
 PORT=8080 npm start
 ```
 
-> Le fichier `data/characters.json` est créé automatiquement au premier lancement. Il persiste entre les redémarrages — ne pas le supprimer.
+> Les documents Automerge sont stockés dans `data/automerge/` et l'identifiant du document
+> racine dans `data/root.json`. Ces fichiers sont créés automatiquement au premier
+> lancement et persistent entre les redémarrages — ne pas les supprimer.
+>
+> **Migration :** si un ancien `data/characters.json` est présent au premier démarrage,
+> ses personnages sont importés automatiquement dans les documents Automerge.
 
 ---
 
@@ -74,4 +83,4 @@ PORT=8080 npm start
 
 ## Stack technique
 
-React 19 · TypeScript 5.8 · Vite 5 · Tailwind CSS 3.4 · Express
+React 19 · TypeScript 5.8 · Vite 5 · Tailwind CSS 3.4 · Express · Automerge 3 (CRDT) · WebSocket

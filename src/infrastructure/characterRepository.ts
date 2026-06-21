@@ -1,37 +1,8 @@
 import type { Character, Stats } from '../domain/types';
 
-export async function loadCharacters(): Promise<Character[] | null> {
-  try {
-    const response = await fetch('/api/characters');
-    if (!response.ok) return null;
-    const data = await response.json() as Character[];
-    return Array.isArray(data) ? data.map(normalizeCharacter) : null;
-  } catch {
-    return null;
-  }
-}
-
-export function addCharacter(character: Character): void {
-  fetch('/api/characters', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(character),
-  }).catch(() => {});
-}
-
-export function updateCharacter(character: Character): void {
-  fetch(`/api/characters/${character.id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(character),
-  }).catch(() => {});
-}
-
-export function deleteCharacter(id: string): void {
-  fetch(`/api/characters/${id}`, {
-    method: 'DELETE',
-  }).catch(() => {});
-}
+// Persistence/sync is handled by Automerge (see src/infrastructure/repo.ts).
+// This module only normalizes characters so every document has all fields,
+// used when creating, importing, or migrating a character.
 
 export function normalizeCharacter(character: Character): Character {
   const advancementsTaken = character.advancementsTaken ?? [];
