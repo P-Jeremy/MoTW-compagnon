@@ -16,6 +16,10 @@ vite.config.js
 src/data/characters/characters.json
 data/characters.json
 
+# Documents Automerge / CRDT (générés à l'exécution)
+data/automerge/
+data/root.json
+
 # Fichiers temporaires
 .tmp_*
 

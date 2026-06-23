@@ -1,6 +1,13 @@
 {
   "app": {
-    "gameName": "Monster of the Week"
+    "gameName": "Monster of the Week",
+    "loading": "Connexion au serveur…",
+    "syncing": "Synchronisation des données…",
+    "serverErrorTitle": "Impossible de joindre le serveur",
+    "serverErrorHint": "Vérifie que le serveur est lancé (npm start, ou npm run dev:full sans autre serveur déjà sur le port 3000).",
+    "syncSlowHint": "La synchronisation prend plus de temps que prévu. Les données locales sont peut-être corrompues.",
+    "retry": "Réessayer",
+    "resetLocal": "Réinitialiser les données locales"
   },
   "stats": {
     "charm": "Charme",

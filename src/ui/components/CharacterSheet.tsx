@@ -1,6 +1,10 @@
 import { ArrowLeft, Download, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import type { Character, DiceRoll, Move, Playbook, Tracker as TrackerType } from '../../domain/types';
+import { updateText } from '@automerge/automerge';
+import type { AutomergeUrl, DocHandle } from '@automerge/automerge-repo';
+import { useDocHandle, useDocument, usePresence } from '@automerge/automerge-repo-react-hooks';
+import type { Character, DiceRoll, Move, Playbook } from '../../domain/types';
+import { getIdentity, type UserIdentity } from '../../infrastructure/identity';
 import { formatModifier, statLabels, statOrder } from '../../domain/statLabels';
 import { Tracker } from './Tracker';
 import { MoveCard } from './MoveCard';
@@ -13,16 +17,66 @@ import { BasicMovePicker } from './BasicMovePicker';
 import { PlaybookSectionPicker } from './PlaybookSectionPicker';
 import { hasPlaybookSection } from '../../application/playbookSectionService';
 
-interface CharacterSheetProps {
-  character: Character;
+interface CharacterSheetContainerProps {
+  url: AutomergeUrl;
   playbook: Playbook;
   onBack: () => void;
   onDelete: () => void;
-  onUpdate: (character: Character) => void;
 }
 
-export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate }: CharacterSheetProps) {
+/**
+ * Loads the character's Automerge document + handle, then renders the sheet.
+ * Edits flow through `changeDoc` (CRDT mutations) so concurrent editors merge
+ * instead of overwriting each other.
+ */
+export function CharacterSheetContainer({ url, playbook, onBack, onDelete }: CharacterSheetContainerProps) {
+  const [character, changeDoc] = useDocument<Character>(url, { suspense: false });
+  const handle = useDocHandle<Character>(url, { suspense: false });
+
+  if (!character || !handle) {
+    return (
+      <main className="flex min-h-dvh items-center justify-center px-4 text-center">
+        <p className="text-sm font-bold text-stone-500">{fr.app.loading}</p>
+      </main>
+    );
+  }
+
+  return (
+    <CharacterSheet
+      character={character}
+      playbook={playbook}
+      handle={handle}
+      onBack={onBack}
+      onDelete={onDelete}
+      onChange={changeDoc}
+    />
+  );
+}
+
+interface CharacterSheetProps {
+  character: Character;
+  playbook: Playbook;
+  handle: DocHandle<Character>;
+  onBack: () => void;
+  onDelete: () => void;
+  onChange: (recipe: (doc: Character) => void) => void;
+}
+
+function CharacterSheet({ character, playbook, handle, onBack, onDelete, onChange }: CharacterSheetProps) {
   const [rolls, setRolls] = useState<Record<string, DiceRoll>>({});
+  const identity = useMemo(() => getIdentity(), []);
+  const { peerStates } = usePresence<{ user: UserIdentity }>({
+    handle,
+    initialState: { user: identity },
+  });
+  const peers = useMemo(() => {
+    const byUser = new Map<string, UserIdentity>();
+    for (const peer of Object.values(peerStates.getStates())) {
+      const user = peer.value?.user;
+      if (user?.userId && user.userId !== identity.userId) byUser.set(user.userId, user);
+    }
+    return Array.from(byUser.values());
+  }, [peerStates, identity.userId]);
   const [activeTab, setActiveTab] = useState<'sheet' | 'moves' | 'reference' | 'advancements'>('sheet');
   const [pendingAdvancement, setPendingAdvancement] = useState<{
     text: string;
@@ -39,12 +93,11 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
   const advancedUnlocked = galonsTaken >= 5;
   const hasGalonAvailable = character.xp.current >= character.xp.max;
 
-  function applyGalon(overrides: Partial<Character>) {
-    onUpdate({
-      ...character,
-      xp: { ...character.xp, current: 0 },
-      galonsTaken: galonsTaken + 1,
-      ...overrides,
+  function applyGalon(mutate: (doc: Character) => void) {
+    onChange((doc) => {
+      doc.xp.current = 0;
+      doc.galonsTaken = (doc.galonsTaken ?? 0) + 1;
+      mutate(doc);
     });
   }
 
@@ -58,13 +111,11 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
       setMarkBasicMovesFor({ text: advancement, isAdvanced: false });
       return;
     }
-    const luckUpdate = type.kind === 'luck'
-      ? { luck: { ...character.luck, current: Math.min(character.luck.current + 1, character.luck.max) } }
-      : {};
-    const statsUpdate = type.kind === 'stat'
-      ? { stats: { ...character.stats, [type.stat]: character.stats[type.stat] + type.bonus } }
-      : {};
-    applyGalon({ ...luckUpdate, ...statsUpdate, advancementsTaken: [...character.advancementsTaken, advancement] });
+    applyGalon((doc) => {
+      if (type.kind === 'luck') doc.luck.current = Math.min(doc.luck.current + 1, doc.luck.max);
+      if (type.kind === 'stat') doc.stats[type.stat] += type.bonus;
+      doc.advancementsTaken.push(advancement);
+    });
   }
 
   function takeAdvancedAdvancement(advancement: string) {
@@ -78,32 +129,31 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
       setMarkBasicMovesFor({ text: advancement, isAdvanced: true });
       return;
     }
-    const luckUpdate = type.kind === 'luck'
-      ? { luck: { ...character.luck, current: Math.min(character.luck.current + 1, character.luck.max) } }
-      : {};
-    const statsUpdate = type.kind === 'stat'
-      ? { stats: { ...character.stats, [type.stat]: character.stats[type.stat] + type.bonus } }
-      : {};
-    applyGalon({ ...luckUpdate, ...statsUpdate, advancedAdvancementsTaken: [...character.advancedAdvancementsTaken, advancement] });
+    applyGalon((doc) => {
+      if (type.kind === 'luck') doc.luck.current = Math.min(doc.luck.current + 1, doc.luck.max);
+      if (type.kind === 'stat') doc.stats[type.stat] += type.bonus;
+      doc.advancedAdvancementsTaken.push(advancement);
+    });
   }
 
   function confirmMoveAdvancement(moveId: string) {
     if (!pendingAdvancement) return;
-    const advUpdate = pendingAdvancement.isAdvanced
-      ? { advancedAdvancementsTaken: [...character.advancedAdvancementsTaken, pendingAdvancement.text] }
-      : { advancementsTaken: [...character.advancementsTaken, pendingAdvancement.text] };
-    applyGalon({ moves: [...character.moves, moveId], ...advUpdate });
+    const { isAdvanced, text } = pendingAdvancement;
+    applyGalon((doc) => {
+      doc.moves.push(moveId);
+      if (isAdvanced) doc.advancedAdvancementsTaken.push(text);
+      else doc.advancementsTaken.push(text);
+    });
     setPendingAdvancement(null);
   }
 
   function confirmMarkBasicMoves(moveIds: string[]) {
     if (!markBasicMovesFor) return;
-    const advUpdate = markBasicMovesFor.isAdvanced
-      ? { advancedAdvancementsTaken: [...character.advancedAdvancementsTaken, markBasicMovesFor.text] }
-      : { advancementsTaken: [...character.advancementsTaken, markBasicMovesFor.text] };
-    applyGalon({
-      advancedBasicMoves: [...(character.advancedBasicMoves ?? []), ...moveIds],
-      ...advUpdate,
+    const { isAdvanced, text } = markBasicMovesFor;
+    applyGalon((doc) => {
+      for (const id of moveIds) doc.advancedBasicMoves.push(id);
+      if (isAdvanced) doc.advancedAdvancementsTaken.push(text);
+      else doc.advancementsTaken.push(text);
     });
     setMarkBasicMovesFor(null);
   }
@@ -120,21 +170,24 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
   }, [character.moves, character.playbookSection, playbook.moves, playbook.moveChoices.fixed]);
 
   function updateTracker(key: 'luck' | 'xp' | 'harm', value: number) {
-    const tracker: TrackerType = character[key];
-    onUpdate({ ...character, [key]: { ...tracker, current: value } });
+    onChange((doc) => {
+      doc[key].current = value;
+    });
   }
 
   function updateWeaponName(weaponId: string, name: string) {
-    onUpdate({
-      ...character,
-      equipment: character.equipment.map((weapon) => (weapon.id === weaponId ? { ...weapon, name } : weapon)),
+    onChange((doc) => {
+      const index = doc.equipment.findIndex((weapon) => weapon.id === weaponId);
+      if (index !== -1) updateText(doc, ['equipment', index, 'name'], name);
     });
   }
 
   function handleRoll(moveId: string, roll: DiceRoll) {
     setRolls((current) => ({ ...current, [moveId]: roll }));
     if (roll.tier === 'failure' && character.xp.current < character.xp.max) {
-      onUpdate({ ...character, xp: { ...character.xp, current: character.xp.current + 1 } });
+      onChange((doc) => {
+        doc.xp.current = Math.min(doc.xp.current + 1, doc.xp.max);
+      });
       setXpNotice(true);
       setTimeout(() => setXpNotice(false), 3000);
     }
@@ -184,6 +237,7 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
           {fr.sheet.backToList}
         </button>
         <div className="flex items-center gap-2">
+          <PresenceBadge peers={peers} />
           <button
             type="button"
             onClick={exportCharacter}
@@ -208,7 +262,10 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
         <p className="text-sm font-bold text-orange-200">{playbook.name}</p>
         <input
           value={character.name}
-          onChange={(event) => onUpdate({ ...character, name: event.target.value })}
+          onChange={(event) => {
+            const value = event.target.value;
+            onChange((doc) => updateText(doc, ['name'], value));
+          }}
           className="mt-1 min-h-12 w-full bg-transparent text-3xl font-black outline-none sm:text-4xl border-b-2 border-transparent focus:border-white/40 transition-colors"
         />
         <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-200">{playbook.description}</p>
@@ -317,7 +374,10 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
             <h2 className="text-base font-bold text-ink">{fr.sheet.history}</h2>
             <textarea
               value={character.history}
-              onChange={(event) => onUpdate({ ...character, history: event.target.value })}
+              onChange={(event) => {
+                const value = event.target.value;
+                onChange((doc) => updateText(doc, ['history'], value));
+              }}
               className="mt-3 min-h-40 w-full resize-y rounded-md border border-stone-300 bg-stone-50 p-3 text-sm leading-6 text-ink outline-none focus:border-ember focus:ring-2 focus:ring-orange-100"
               placeholder={fr.sheet.historyPlaceholder}
             />
@@ -327,7 +387,10 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
             <h2 className="text-base font-bold text-ink">{fr.sheet.notes}</h2>
             <textarea
               value={character.notes}
-              onChange={(event) => onUpdate({ ...character, notes: event.target.value })}
+              onChange={(event) => {
+                const value = event.target.value;
+                onChange((doc) => updateText(doc, ['notes'], value));
+              }}
               className="mt-3 min-h-40 w-full resize-y rounded-md border border-stone-300 bg-stone-50 p-3 text-sm leading-6 text-ink outline-none focus:border-ember focus:ring-2 focus:ring-orange-100"
               placeholder={fr.sheet.notesPlaceholder}
             />
@@ -345,10 +408,15 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
                       value={link?.hunterName ?? ''}
                       onChange={(event) => {
                         const hunterName = event.target.value;
-                        const links = hunterName
-                          ? [...character.links.filter((l) => l.prompt !== prompt), { prompt, hunterName }]
-                          : character.links.filter((l) => l.prompt !== prompt);
-                        onUpdate({ ...character, links });
+                        onChange((doc) => {
+                          const index = doc.links.findIndex((l) => l.prompt === prompt);
+                          if (hunterName) {
+                            if (index !== -1) updateText(doc, ['links', index, 'hunterName'], hunterName);
+                            else doc.links.push({ prompt, hunterName });
+                          } else if (index !== -1) {
+                            doc.links.splice(index, 1);
+                          }
+                        });
                       }}
                       placeholder={fr.sheet.linkHunterPlaceholder}
                       className="mt-1 min-h-9 w-full rounded-md border border-stone-300 bg-stone-50 px-3 py-1 text-sm font-bold text-ink outline-none focus:border-ember focus:ring-2 focus:ring-orange-100"
@@ -375,7 +443,7 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
                 <PlaybookSectionPicker
                   playbook={playbook}
                   choices={character.playbookSection}
-                  onChange={(section) => onUpdate({ ...character, playbookSection: section })}
+                  onChange={(section) => onChange((doc) => { doc.playbookSection = section; })}
                 />
               ) : Object.keys(character.playbookSection).length === 0 ? (
                 <button
@@ -523,6 +591,26 @@ export function CharacterSheet({ character, playbook, onBack, onDelete, onUpdate
         </div>
       ) : null}
     </main>
+  );
+}
+
+function PresenceBadge({ peers }: { peers: UserIdentity[] }) {
+  if (peers.length === 0) return null;
+  return (
+    <div className="flex items-center gap-2" title={`Aussi sur cette fiche : ${peers.map((p) => p.name).join(', ')}`}>
+      <div className="flex -space-x-2">
+        {peers.slice(0, 4).map((peer) => (
+          <span
+            key={peer.userId}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-white text-xs font-black text-white shadow-soft"
+            style={{ backgroundColor: peer.color }}
+          >
+            {peer.name.slice(0, 2).toUpperCase()}
+          </span>
+        ))}
+      </div>
+      {peers.length > 4 ? <span className="text-xs font-bold text-stone-500">+{peers.length - 4}</span> : null}
+    </div>
   );
 }
 
