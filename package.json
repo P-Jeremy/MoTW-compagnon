@@ -11,6 +11,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@3d-dice/dice-box": "^1.1.4",
     "@automerge/automerge": "^3.2.6",
     "@automerge/automerge-repo": "^2.5.6",
     "@automerge/automerge-repo-network-websocket": "^2.5.6",

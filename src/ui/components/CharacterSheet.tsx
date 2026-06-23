@@ -16,6 +16,7 @@ import { MovePicker } from './MovePicker';
 import { BasicMovePicker } from './BasicMovePicker';
 import { PlaybookSectionPicker } from './PlaybookSectionPicker';
 import { hasPlaybookSection } from '../../application/playbookSectionService';
+import { DiceColorPicker } from './DiceColorPicker';
 
 interface CharacterSheetContainerProps {
   url: AutomergeUrl;
@@ -77,7 +78,7 @@ function CharacterSheet({ character, playbook, handle, onBack, onDelete, onChang
     }
     return Array.from(byUser.values());
   }, [peerStates, identity.userId]);
-  const [activeTab, setActiveTab] = useState<'sheet' | 'moves' | 'reference' | 'advancements'>('sheet');
+  const [activeTab, setActiveTab] = useState<'sheet' | 'moves' | 'reference' | 'advancements' | 'preferences'>('sheet');
   const [pendingAdvancement, setPendingAdvancement] = useState<{
     text: string;
     isAdvanced: boolean;
@@ -271,13 +272,13 @@ function CharacterSheet({ character, playbook, handle, onBack, onDelete, onChang
         <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-200">{playbook.description}</p>
       </section>
 
-      <div className="mb-5 flex gap-1 border-b border-stone-200">
-        {(['sheet', 'moves', 'advancements', 'reference'] as const).map((tab) => (
+      <div className="mb-5 flex gap-1 overflow-x-auto border-b border-stone-200">
+        {(['sheet', 'moves', 'advancements', 'reference', 'preferences'] as const).map((tab) => (
           <button
             key={tab}
             type="button"
             onClick={() => setActiveTab(tab)}
-            className={`-mb-px border-b-2 px-4 py-2 text-sm font-bold transition-colors ${
+            className={`-mb-px shrink-0 border-b-2 px-4 py-2 text-sm font-bold transition-colors ${
               activeTab === tab
                 ? 'border-ink text-ink'
                 : 'border-transparent text-stone-400 hover:text-stone-600'
@@ -289,6 +290,8 @@ function CharacterSheet({ character, playbook, handle, onBack, onDelete, onChang
               ? 'Manœuvres'
               : tab === 'reference'
               ? 'Aide de jeu'
+              : tab === 'preferences'
+              ? fr.preferences.tab
               : fr.sheet.advancementsTab}
           </button>
         ))}
@@ -473,6 +476,7 @@ function CharacterSheet({ character, playbook, handle, onBack, onDelete, onChang
                     stats={character.stats}
                     lastRoll={rolls[move.id]}
                     onRoll={(roll) => handleRoll(move.id, roll)}
+                    diceColor={character.preferences?.diceColor}
                   />
                 ))}
               </div>
@@ -491,6 +495,7 @@ function CharacterSheet({ character, playbook, handle, onBack, onDelete, onChang
                     lastRoll={rolls[move.id]}
                     onRoll={(roll) => handleRoll(move.id, roll)}
                     extraBonus={(character.advancedBasicMoves ?? []).includes(move.id) ? 1 : 0}
+                    diceColor={character.preferences?.diceColor}
                   />
                 ))}
               </div>
@@ -582,6 +587,14 @@ function CharacterSheet({ character, playbook, handle, onBack, onDelete, onChang
             </div>
           </section>
         </div>
+      ) : activeTab === 'preferences' ? (
+        <DiceColorPicker
+          value={character.preferences?.diceColor}
+          onChange={(color) => onChange((doc) => {
+            if (!doc.preferences) doc.preferences = {};
+            doc.preferences.diceColor = color;
+          })}
+        />
       ) : (
         <HunterReference />
       )}
@@ -671,3 +684,4 @@ function PlaybookSectionSummary({
     </dl>
   );
 }
+
