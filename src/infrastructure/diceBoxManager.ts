@@ -14,7 +14,7 @@ export function getDiceBox(): Promise<DiceBox> {
         lightIntensity: 1,
         enableShadows: true,
         theme: 'default',
-        scale: 9,
+        scale: window.matchMedia('(pointer: coarse)').matches ? 4 : 9,
       });
       box.init().then(() => {
         // Re-measure after init so the physics world matches the full-screen
