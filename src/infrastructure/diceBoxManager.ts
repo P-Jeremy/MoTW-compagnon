@@ -7,16 +7,23 @@ export function getDiceBox(): Promise<DiceBox> {
     _initPromise = new Promise((resolve, reject) => {
       const box = new DiceBox('#dice-box', {
         assetPath: '/assets/dice-box/',
+        gravity: 20,
         spinForce: 5,
-        throwForce: 8,
-        startingHeight: 10,
-        settleTimeout: 5000,
+        throwForce: 5,
+        startingHeight: 6,
         lightIntensity: 1,
         enableShadows: true,
         theme: 'default',
         scale: window.matchMedia('(pointer: coarse)').matches ? 4 : 9,
       });
-      box.init().then(() => {
+      const initRace = Promise.race([
+        box.init(),
+        new Promise<never>((_, rej) =>
+          setTimeout(() => rej(new Error('DiceBox init timeout')), 2_000)
+        ),
+      ]);
+
+      initRace.then(() => {
         // Re-measure after init so the physics world matches the full-screen
         // canvas dimensions (CSS may not have painted during init).
         box.resizeWorld();
@@ -35,7 +42,6 @@ export async function rollDice(notation: string, themeColor?: string): Promise<D
 
   const results = await box.roll(notation);
 
-  // Dice have settled — schedule auto-dismiss after 10 s or on any click
   let dismissTimer: ReturnType<typeof setTimeout>;
 
   function dismiss() {
