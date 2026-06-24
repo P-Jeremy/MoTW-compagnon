@@ -107,6 +107,7 @@ app.get('/api/root', async (_req, res) => {
   }
 });
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // The http server's EADDRINUSE is re-emitted on the WebSocketServer too, so we
