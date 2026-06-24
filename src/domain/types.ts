@@ -104,6 +104,10 @@ export interface HunterLink {
   hunterName: string;
 }
 
+export interface CharacterPreferences {
+  diceColor?: string;
+}
+
 export interface Character {
   id: string;
   name: string;
@@ -122,6 +126,7 @@ export interface Character {
   galonsTaken: number;
   playbookSection: Record<string, string | string[]>;
   advancedBasicMoves: string[];
+  preferences?: CharacterPreferences;
 }
 
 export interface DiceRoll {

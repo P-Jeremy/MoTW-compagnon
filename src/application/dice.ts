@@ -5,8 +5,16 @@ export function roll2d6(
   stat?: StatKey,
   extraBonus: number = 0,
 ): DiceRoll {
-  const dieA = randomDie();
-  const dieB = randomDie();
+  return buildDiceRoll(randomDie(), randomDie(), stats, stat, extraBonus);
+}
+
+export function buildDiceRoll(
+  dieA: number,
+  dieB: number,
+  stats: Stats,
+  stat?: StatKey,
+  extraBonus: number = 0,
+): DiceRoll {
   const modifier = (stat ? stats[stat] : 0) + extraBonus;
   const total = dieA + dieB + modifier;
   return {

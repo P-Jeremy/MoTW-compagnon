@@ -41,3 +41,19 @@ button:disabled {
 ::selection {
   background: #fed7aa;
 }
+
+#dice-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+#dice-box canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

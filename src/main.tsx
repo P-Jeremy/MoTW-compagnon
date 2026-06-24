@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { RepoContext } from '@automerge/automerge-repo-react-hooks';
 import App from './App';
 import { repo } from './infrastructure/repo';
+import './infrastructure/diceBoxManager';
 import './ui/styles.css';
 
 createRoot(document.getElementById('root')!).render(

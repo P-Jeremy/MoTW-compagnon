@@ -31,5 +31,13 @@ data/root.json
 *.swp
 *.swo
 
+# Claude Code (settings locaux)
+.claude/settings.local.json
+
+# Assets générés par @3d-dice/dice-box postinstall (ne pas committer)
+public/assets/dice-box/
+public/assets/themes/
+public/assets/ammo/
+
 docs
 

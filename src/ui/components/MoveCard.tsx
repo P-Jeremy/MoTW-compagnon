@@ -10,9 +10,10 @@ interface MoveCardProps {
   lastRoll?: DiceRoll;
   onRoll: (roll: DiceRoll) => void;
   extraBonus?: number;
+  diceColor?: string;
 }
 
-export function MoveCard({ move, stats, lastRoll, onRoll, extraBonus = 0 }: MoveCardProps) {
+export function MoveCard({ move, stats, lastRoll, onRoll, extraBonus = 0, diceColor }: MoveCardProps) {
   return (
     <article className="rounded-lg border border-stone-200 bg-white p-3 shadow-soft">
       <div className="flex items-start gap-3">
@@ -39,6 +40,7 @@ export function MoveCard({ move, stats, lastRoll, onRoll, extraBonus = 0 }: Move
             extraBonus={extraBonus}
             onRoll={onRoll}
             lastRoll={lastRoll}
+            diceColor={diceColor}
           />
         </div>
       ) : null}
