@@ -30,9 +30,13 @@ export function DiceRoller({ stats, stat, extraBonus = 0, onRoll, lastRoll, dice
     setRolling(true);
     try {
       const dies = await rollDice('2d6', diceColor);
-      const dieA = dies[0]?.value ?? Math.ceil(Math.random() * 6);
-      const dieB = dies[1]?.value ?? Math.ceil(Math.random() * 6);
-      onRoll(buildDiceRoll(dieA, dieB, stats, stat, extraBonus));
+      const dieA = dies[0]?.value;
+      const dieB = dies[1]?.value;
+      if (dieA && dieB) {
+        onRoll(buildDiceRoll(dieA, dieB, stats, stat, extraBonus));
+      } else {
+        onRoll(roll2d6(stats, stat, extraBonus));
+      }
     } catch {
       // dice-box unavailable: fall back to instant roll
       onRoll(roll2d6(stats, stat, extraBonus));
