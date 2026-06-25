@@ -8,6 +8,7 @@ import { getRootUrl, syncUrl } from './infrastructure/repo';
 import { CharacterCreator } from './ui/components/CharacterCreator';
 import { CharacterList } from './ui/components/CharacterList';
 import { CharacterSheetContainer } from './ui/components/CharacterSheet';
+import { BuildInfoFooter } from './ui/components/BuildInfoFooter';
 import fr from './data/locales/fr.json';
 
 type View = 'list' | 'create' | 'sheet';
@@ -163,71 +164,85 @@ export default function App() {
 
   if (!rootUrl || !rootDoc) {
     return (
-      <main className="flex min-h-dvh flex-col items-center justify-center gap-4 px-4 text-center">
-        {bootError ? (
-          <>
-            <p className="text-base font-bold text-red-700">{fr.app.serverErrorTitle}</p>
-            <p className="max-w-md text-sm text-stone-500">{fr.app.serverErrorHint}</p>
-            <button
-              type="button"
-              onClick={() => setBootAttempt((n) => n + 1)}
-              className="rounded bg-stone-800 px-4 py-2 text-sm font-bold text-white hover:bg-stone-700"
-            >
-              {fr.app.retry}
-            </button>
-          </>
-        ) : (
-          <>
-            <p className="text-sm font-bold text-stone-500">{rootUrl ? fr.app.syncing : fr.app.loading}</p>
-            {syncSlow && (
-              <>
-                <p className="max-w-md text-sm text-stone-500">{fr.app.syncSlowHint}</p>
-                <pre className="max-w-md whitespace-pre-wrap rounded bg-stone-100 px-3 py-2 text-left text-xs text-stone-600">
-                  {`serveur: ${rootUrl ? 'OK' : 'inconnu'}\n`}
-                  {`websocket /sync: ${diag.ws}\n`}
-                  {`pairs connectés: ${diag.peers}\n`}
-                  {`état du document: ${diag.findState}${diag.error ? ` (${diag.error})` : ''}`}
-                </pre>
-                <button
-                  type="button"
-                  onClick={resetLocalData}
-                  className="rounded border border-stone-300 px-4 py-2 text-sm font-bold text-stone-700 hover:bg-stone-100"
-                >
-                  {fr.app.resetLocal}
-                </button>
-              </>
-            )}
-          </>
-        )}
-      </main>
+      <>
+        <main className="flex min-h-dvh flex-col items-center justify-center gap-4 px-4 text-center">
+          {bootError ? (
+            <>
+              <p className="text-base font-bold text-red-700">{fr.app.serverErrorTitle}</p>
+              <p className="max-w-md text-sm text-stone-500">{fr.app.serverErrorHint}</p>
+              <button
+                type="button"
+                onClick={() => setBootAttempt((n) => n + 1)}
+                className="rounded bg-stone-800 px-4 py-2 text-sm font-bold text-white hover:bg-stone-700"
+              >
+                {fr.app.retry}
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-sm font-bold text-stone-500">{rootUrl ? fr.app.syncing : fr.app.loading}</p>
+              {syncSlow && (
+                <>
+                  <p className="max-w-md text-sm text-stone-500">{fr.app.syncSlowHint}</p>
+                  <pre className="max-w-md whitespace-pre-wrap rounded bg-stone-100 px-3 py-2 text-left text-xs text-stone-600">
+                    {`serveur: ${rootUrl ? 'OK' : 'inconnu'}\n`}
+                    {`websocket /sync: ${diag.ws}\n`}
+                    {`pairs connectés: ${diag.peers}\n`}
+                    {`état du document: ${diag.findState}${diag.error ? ` (${diag.error})` : ''}`}
+                  </pre>
+                  <button
+                    type="button"
+                    onClick={resetLocalData}
+                    className="rounded border border-stone-300 px-4 py-2 text-sm font-bold text-stone-700 hover:bg-stone-100"
+                  >
+                    {fr.app.resetLocal}
+                  </button>
+                </>
+              )}
+            </>
+          )}
+        </main>
+        <BuildInfoFooter />
+      </>
     );
   }
 
   if (view === 'create') {
-    return <CharacterCreator playbooks={playbooks} onCancel={() => setView('list')} onCreate={addCharacter} />;
+    return (
+      <>
+        <CharacterCreator playbooks={playbooks} onCancel={() => setView('list')} onCreate={addCharacter} />
+        <BuildInfoFooter />
+      </>
+    );
   }
 
   if (view === 'sheet' && selectedEntry && selectedPlaybook) {
     return (
-      <CharacterSheetContainer
-        url={selectedEntry.url}
-        playbook={selectedPlaybook}
-        onBack={() => setView('list')}
-        onDelete={deleteSelectedCharacter}
-      />
+      <>
+        <CharacterSheetContainer
+          url={selectedEntry.url}
+          playbook={selectedPlaybook}
+          onBack={() => setView('list')}
+          onDelete={deleteSelectedCharacter}
+        />
+        <BuildInfoFooter />
+      </>
     );
   }
 
   return (
-    <CharacterList
-      characters={characters}
-      playbooks={playbooks}
-      onCreate={() => setView('create')}
-      onOpen={(id) => {
-        setSelectedId(id);
-        setView('sheet');
-      }}
-      onImport={addCharacter}
-    />
+    <>
+      <CharacterList
+        characters={characters}
+        playbooks={playbooks}
+        onCreate={() => setView('create')}
+        onOpen={(id) => {
+          setSelectedId(id);
+          setView('sheet');
+        }}
+        onImport={addCharacter}
+      />
+      <BuildInfoFooter />
+    </>
   );
 }
